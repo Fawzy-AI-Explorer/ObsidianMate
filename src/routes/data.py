@@ -18,6 +18,35 @@ async def add_session(request: Request, session_id: str, user_id: str):
         status_code=status.HTTP_200_OK,
     )
 
+# remove session API
+@data_router.delete("/delete_session/{session_id}")
+async def delete_session(session_id: str):
+    """
+    Delete a session by its ID.
+
+    Args:
+        session_id (str): The ID of the session to delete.
+        request (Request): The incoming HTTP request.
+
+    Returns:
+        dict: A dictionary indicating the deletion status.
+    """
+
+    ## Check if session exists
+    
+    
+    ## get Session By ID
+
+    ## Delete Session
+
+    return JSONResponse(
+        content={
+            "signal": f"Session {session_id} deleted successfully.",
+            "session_id": session_id,
+            },
+        status_code=status.HTTP_200_OK,
+    )
+ 
 
 def main():
     """Entry Point for the Program."""
@@ -28,3 +57,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,0 +1,10 @@
+# -------------- APP Config --------------
+APP_NAME: "project-boilerplate"
+APP_VERSION: "1.0.0"
+
+# -------------- Path Config --------------
+PATH_LOGS: "logs"
+PATH_DATA_ROOT: "data"
+PATH_ASSETS_ROOT: "assets"
+PATH_MODELS_ROOT: "models"
+PATH_OUTPUT_ROOT: "output"

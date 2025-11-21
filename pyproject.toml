@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "project-boilerplate"
+version = "1.0.0"
+description = "A reusable project template with a clean structure and pre-configured setup to kickstart new projects."
+authors = [
+    { name="Adham Allam", email="adham32003200@gmail.com" },
+]
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICEN[CS]E*", "AUTHORS.md"]
+keywords = ["boilerplate", "template", "project"]
+classifiers = [
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Setup Tools",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Ad7amstein/project-boilerplate"
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+# Example: mycli = "my_package.cli:main"

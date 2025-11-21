@@ -35,6 +35,7 @@ class Settings(BaseSettings):
     PATH_MODELS_ROOT: str = Field(...)
     PATH_OUTPUT_ROOT: str = Field(...)
 
+    RETRY_ATTEMPS: int = Field(...)
     RETRY_EXP_BASE: int = Field(...)
     RETRY_INITAL_RETRY: int = Field(...)
     RETRY_HTTP_STATUS_CODE: list[int] = Field(...)

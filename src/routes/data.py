@@ -1,42 +1,25 @@
-"""Base Route Module."""
-
 import os
-from fastapi import FastAPI, APIRouter, Request, status
+import logging
+from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 
-from utils.config_utils import get_settings
-
-data_router = APIRouter(
-    prefix="/api/v1/data",
-    tags=["api_v1"],
-)
+logger = logging.getLogger("uvicorn")
+data_router = APIRouter(prefix="/api/v1/data", tags=["api_v1", "data"])
 
 
-@data_router.get("/")
-async def welocome(request: Request):
-    """
-    welcome route and entry point for testing connection.
-
-    Args:
-        request (Request): The incoming HTTP request.
-
-    Returns:
-        dict: A dictionary containing:
-            app_name (str): The application name from settings.
-            app_version (str): The application version from settings.
-    """
-
-    settings = request.app.state.settings
-    app_name = settings.APP_NAME
-    app_version = settings.APP_VERSION
-
-    return {
-        "app_name": app_name,
-        "app_version": app_version,
-    }
+@data_router.post("/add_session/{session_id}/{user_id}")
+async def add_session(request: Request, session_id: str, user_id: str):
+    return JSONResponse(
+        content={
+            "signal": "done_adding_session",
+            "session_id": session_id,
+            "user_id": user_id,
+        },
+        status_code=status.HTTP_200_OK,
+    )
 
 # remove session API
-@data_router.delete("/session/{session_id}")
+@data_router.delete("/delete_session/{session_id}")
 async def delete_session(session_id: str):
     """
     Delete a session by its ID.
@@ -63,3 +46,15 @@ async def delete_session(session_id: str):
             },
         status_code=status.HTTP_200_OK,
     )
+ 
+
+def main():
+    """Entry Point for the Program."""
+    print(
+        f"Welcome from `{os.path.basename(__file__).split('.')[0]}` Module. Nothing to do ^_____^!"
+    )
+
+
+if __name__ == "__main__":
+    main()
+

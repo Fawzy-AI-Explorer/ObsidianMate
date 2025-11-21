@@ -41,3 +41,6 @@ else
 fi
 
 echo "✅ Environment setup complete!"
+
+# chmod +x scripts/run_app.sh
+# ./scripts/run_app.sh

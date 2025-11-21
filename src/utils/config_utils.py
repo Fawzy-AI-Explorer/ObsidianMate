@@ -35,6 +35,10 @@ class Settings(BaseSettings):
     PATH_MODELS_ROOT: str = Field(...)
     PATH_OUTPUT_ROOT: str = Field(...)
 
+    RETRY_EXP_BASE: int = Field(...)
+    RETRY_INITAL_RETRY: int = Field(...)
+    RETRY_HTTP_STATUS_CODE: list[int] = Field(...)
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @classmethod

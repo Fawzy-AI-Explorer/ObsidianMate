@@ -2,5 +2,6 @@
 
 # Install the project in editable/developement mode
 pip install -e .
+uvicorn main:app --reload --port 8000 --host 0.0.0.0 
 
-# Add here all nedded commands to run the app
+# to run the app: sh scripts/run_app.sh

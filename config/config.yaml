@@ -8,3 +8,9 @@ PATH_DATA_ROOT: "data"
 PATH_ASSETS_ROOT: "assets"
 PATH_MODELS_ROOT: "models"
 PATH_OUTPUT_ROOT: "output"
+
+# -------------- Retry Config --------------
+RETRY_ATTEMPS: 5
+RETRY_EXP_BASE: 7  
+RETRY_INITAL_RETRY: 1
+RETRY_HTTP_STATUS_CODE: [429, 500, 503, 504]

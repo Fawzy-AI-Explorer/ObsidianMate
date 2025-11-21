@@ -3,17 +3,20 @@ requires = ["setuptools >= 77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "project-boilerplate"
+name = "ObsidianMate"
 version = "1.0.0"
-description = "A reusable project template with a clean structure and pre-configured setup to kickstart new projects."
+description = "An AI-powered assistant for Obsidian users, leveraging LLMs to enhance note-taking and productivity."
 authors = [
     { name="Adham Allam", email="adham32003200@gmail.com" },
+    { name="Mohammad Fawzy", email="moha.fawzy63@gmail.com"},
+    { name="Taha Ahmad", email="dkfid@gmail.com" },
+    { name="Abdelrahman Salama", email="dkfid@gmail.com" },
 ]
 readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"
 license-files = ["LICEN[CS]E*", "AUTHORS.md"]
-keywords = ["boilerplate", "template", "project"]
+keywords = ["Obsidian", "Assistant", "ChatBot", "AI", "LLM"]
 classifiers = [
     "Operating System :: OS Independent",
     "Intended Audience :: Developers",
@@ -25,7 +28,7 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Repository = "https://github.com/Ad7amstein/project-boilerplate"
+Repository = "https://github.com/Fawzy-AI-Explorer/ObsidianMate"
 
 [tool.pytest.ini_options]
 pythonpath = "src"

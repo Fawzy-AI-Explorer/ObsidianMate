@@ -126,8 +126,34 @@ class SessionController(BaseController):
             app_name=app_name, user_id=user_id
         )
 
-    async def delete_sessions(self, app_name, user_id=None):
-        pass
+    async def delete_sessions(self, app_name: str, user_id: str) -> bool:
+        """
+        Delete all sessions for a given user.
+        Args:
+            app_name (str): Name of the application.
+            user_id (str): Unique identifier of the user whose sessions are to be deleted.
+        Returns:
+            bool: True if sessions were successfully deleted, False otherwise.
+        """
+
+        sessions = await self.list_sessions(
+            app_name=app_name,
+            user_id=user_id,
+        )
+        if not sessions:
+            self.logger.warning(
+                "No sessions found for user_id=%s. Cannot delete.",
+                user_id,
+            )
+            return False
+
+        for session in sessions:
+            await self.delete_session(
+                app_name=app_name,
+                user_id=user_id, 
+                session_id=session.session_id,
+            )
+        return True
 
 
 def main():

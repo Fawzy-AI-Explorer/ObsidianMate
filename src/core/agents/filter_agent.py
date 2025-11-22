@@ -21,7 +21,7 @@ retry_config = types.HttpRetryOptions(
 Filter_Agent = Agent(
     name=AgentNameEnum.CONVERSATION_FILTER_AGENT,
     model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
-    description="An agent that filters irrelevant or inappropriate content from user inputs or data streams.",
+    description="An agent that filters irrelevant content from user inputs or data streams.",
     instruction=template_parser.get("filter", "INSTRUCTIONS"),  # type: ignore
 )
 

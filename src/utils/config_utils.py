@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     # .env
     GH_PAT: str = Field(...)
     WSL_PASS: str = Field(...)
+    SQLITE_DB_PATH: str = Field(...)
 
     # .yaml
     APP_NAME: str = Field(...)

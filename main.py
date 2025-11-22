@@ -4,9 +4,9 @@ Main script for the application.
 
 import os
 from contextlib import asynccontextmanager
+from google.adk.sessions.database_session_service import DatabaseSessionService
 import logging
 from fastapi import FastAPI
-from google.adk.sessions.database_session_service import DatabaseSessionService
 from routes import base, data
 from utils import get_settings
 

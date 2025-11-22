@@ -38,7 +38,7 @@ class Settings(BaseSettings):
 
     RETRY_ATTEMPS: int = Field(...)
     RETRY_EXP_BASE: int = Field(...)
-    RETRY_INITAL_RETRY: int = Field(...)
+    RETRY_INITAL_DELAY: int = Field(...)
     RETRY_HTTP_STATUS_CODE: list[int] = Field(...)
 
     SQLITE_DB_PATH: str = Field(...)

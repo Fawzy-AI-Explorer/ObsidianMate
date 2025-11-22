@@ -4,6 +4,7 @@ Main script for the application.
 
 import os
 from contextlib import asynccontextmanager
+from google.adk.sessions.database_session_service import DatabaseSessionService
 import logging
 from fastapi import FastAPI
 from routes import base, data
@@ -19,7 +20,10 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
 
     # Startup
     settings = get_settings()
+    db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
+    session_service = DatabaseSessionService(db_url=db_url)
     app.state.settings = settings
+    app.state.session_service = session_service
 
     yield  # The application runs here
 

@@ -54,10 +54,9 @@ class SessionController(BaseController):
 
         return session
 
-    async def delete_session(self, app_name: Optional[str],
-                             user_id: str, 
-                             session_id: str
-            ):
+    async def delete_session(
+        self, app_name: Optional[str], user_id: str, session_id: str
+    ):
         """
         Delete an existing session.
 
@@ -74,11 +73,8 @@ class SessionController(BaseController):
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
         await self.session_service.delete_session(
-        app_name=app_name, 
-        user_id=user_id, 
-        session_id=session_id
+            app_name=app_name, user_id=user_id, session_id=session_id
         )
-
 
     async def get_session(self, app_name: str, user_id: str, session_id: str):
         pass

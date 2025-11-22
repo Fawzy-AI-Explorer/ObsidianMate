@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     GH_PAT: str = Field(...)
     WSL_PASS: str = Field(...)
     SQLITE_DB_PATH: str = Field(...)
+    GOOGLE_API_KEY: str = Field(...)
 
     # .yaml
     APP_NAME: str = Field(...)

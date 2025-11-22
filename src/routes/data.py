@@ -6,7 +6,6 @@ from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
 from controllers import SessionController
 
-from controllers import SessionController
 
 logger = logging.getLogger("uvicorn")
 data_router = APIRouter(prefix="/api/v1/data", tags=["api_v1", "data"])

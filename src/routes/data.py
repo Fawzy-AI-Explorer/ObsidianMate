@@ -98,6 +98,8 @@ async def get_session(session_id: str, user_id: str, request: Request):
     )
 
 
+
+
 @data_router.get("list_sessions/{user_id}")
 async def list_sessions(request: Request, user_id: str):
     """Retrieve all sessions belonging to a specific user.
@@ -140,28 +142,43 @@ async def list_sessions(request: Request, user_id: str):
 
 # remove session API
 @data_router.delete("/delete_session/{session_id}")
-async def delete_session(session_id: str):
+async def delete_session(session_id: str, user_id: str, request: Request):
     """
-    Delete a session by its ID.
+    Delete a user session by its session ID.
 
     Args:
         session_id (str): The ID of the session to delete.
-        request (Request): The incoming HTTP request.
+        user_id (str): The ID of the user to whom the session belongs.
+        request (Request): FastAPI request object used for accessing application state.
 
     Returns:
-        dict: A dictionary indicating the deletion status.
+        JSONResponse: 
+            - 200 OK if the session was successfully deleted.
+            - 404 NOT FOUND if the session does not exist.
+
     """
 
-    ## Check if session exists
+    app_state = request.app.state
+    app_name = request.app.state.settings.APP_NAME
 
-    ## get Session By ID
-
-    ## Delete Session
-
+    session_controller = SessionController(session_service=app_state.session_service)
+    success = await session_controller.delete_session(
+        app_name=app_name, user_id=user_id, session_id=session_id
+    )
+    if not success:
+        return JSONResponse(
+            content={
+                "signal": "Session deletion failed. Session not found.",
+                "session_id": session_id,
+                "user_id": user_id,
+            },
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
     return JSONResponse(
         content={
-            "signal": f"Session {session_id} deleted successfully.",
+            "signal": "Session deleted successfully.",
             "session_id": session_id,
+            "user_id": user_id,
         },
         status_code=status.HTTP_200_OK,
     )

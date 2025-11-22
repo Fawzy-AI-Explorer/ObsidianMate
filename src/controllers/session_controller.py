@@ -1,3 +1,5 @@
+"""Session Controller Module."""
+
 import os
 from typing import Optional
 from google.adk.sessions import Session, BaseSessionService
@@ -153,7 +155,7 @@ class SessionController(BaseController):
             await self.delete_session(
                 app_name=app_name,
                 user_id=user_id,
-                session_id=session.session_id,
+                session_id=session.id,
             )
         return True
 

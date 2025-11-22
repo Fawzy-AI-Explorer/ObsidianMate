@@ -1,6 +1,7 @@
 import os
 from controllers import BaseController
 from google.adk.sessions import BaseSessionService
+from typing import Optional
 
 class SessionController(BaseController):
     """Controller for managing sessions."""
@@ -14,16 +15,21 @@ class SessionController(BaseController):
         # create_session
         pass
 
-    async def delete_session(self,  app_name: str, user_id: str, session_id: str):
+    async def delete_session(self, app_name: Optional[str],
+                             user_id: str, 
+                             session_id: str
+            ):
         """
         Delete a session by its ID.
         Args:
-            app_name (str): The name of the application.
+            app_name (Optional[str]): The name of the application. If None, defaults to
+                the application name from settings.
             user_id (str): The ID of the user.
             session_id (str): The ID of the session to delete.
         Returns:
             None
         """
+        app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
         await self.session_service.delete_session(
         app_name=app_name, 

@@ -4,7 +4,7 @@ import os
 from typing import Optional
 from google.adk.sessions import Session, BaseSessionService
 from google.adk.errors.already_exists_error import AlreadyExistsError
-from controllers import BaseController
+from controllers.base_controller import BaseController
 from utils.logging_utils import setup_logger
 
 

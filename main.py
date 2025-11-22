@@ -3,9 +3,9 @@ Main script for the application.
 """
 
 import os
+import logging
 from contextlib import asynccontextmanager
 from google.adk.sessions.database_session_service import DatabaseSessionService
-import logging
 from fastapi import FastAPI
 from routes import base, data
 from utils import get_settings
@@ -15,6 +15,7 @@ logger = logging.getLogger("uvicorn")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
+    """Manage application startup and shutdown events."""
 
     logger.info("Application is starting up...")
 

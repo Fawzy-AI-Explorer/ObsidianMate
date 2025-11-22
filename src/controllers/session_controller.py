@@ -3,7 +3,6 @@
 import os
 from typing import Optional
 from google.adk.sessions import Session, BaseSessionService
-from google.adk.sessions.base_session_service import ListSessionsResponse
 from google.adk.errors.already_exists_error import AlreadyExistsError
 from controllers import BaseController
 from utils.logging_utils import setup_logger
@@ -110,7 +109,7 @@ class SessionController(BaseController):
         )
         return session
 
-    async def list_sessions(self, app_name: str, user_id: str) -> ListSessionsResponse:
+    async def list_sessions(self, app_name: str, user_id: str) -> list[Session]:
         """List all sessions for a given application and optionally for a specific user.
 
         Args:
@@ -124,9 +123,10 @@ class SessionController(BaseController):
         """
 
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
-        return await self.session_service.list_sessions(
+        sessions = await self.session_service.list_sessions(
             app_name=app_name, user_id=user_id
         )
+        return sessions.sessions
 
     async def delete_sessions(self, app_name: str, user_id: str) -> bool:
         """

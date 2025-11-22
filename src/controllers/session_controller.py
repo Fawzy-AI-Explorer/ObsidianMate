@@ -56,8 +56,9 @@ class SessionController(BaseController):
 
     async def delete_session(
         self, app_name: Optional[str], user_id: str, session_id: str
-    ):
-        """Delete an existing session.
+    ) -> bool:
+        """
+        Delete an existing session.
 
         Args:
             app_name (Optional[str]): Name of the application. If ``None``,
@@ -66,17 +67,46 @@ class SessionController(BaseController):
             session_id (str): Unique identifier of the session to be deleted.
 
         Returns:
-            None: This method does not return a value.
+            bool: True if the session was successfully deleted, False otherwise.
         """
 
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
+        session = await self.get_session(
+            app_name=app_name, user_id=user_id, session_id=session_id
+        )
+        if session is None:
+            self.logger.warning(
+                "Session with session_id=%s for user_id=%s does not exist. Cannot delete.",
+                session_id,
+                user_id,
+            )
+            return False
+
         await self.session_service.delete_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
+        return True
 
-    async def get_session(self, app_name: str, user_id: str, session_id: str):
-        pass
+    async def get_session(
+        self, app_name: str, user_id: str, session_id: str
+    ) -> Optional[Session]:
+        """
+        Retrieve a user session from the session service.
+
+        Args:
+            app_name (str): Name of the application.
+            user_id (str): Unique identifier of the user.
+            session_id (str): Unique identifier of the session to retrieve.
+
+        Returns:
+            Optional[Session]: The retrieved session instance, or None if not found.
+        """
+
+        session = await self.session_service.get_session(
+            app_name=app_name, user_id=user_id, session_id=session_id
+        )
+        return session
 
     async def list_sessions(self, app_name, user_id=None):
         pass

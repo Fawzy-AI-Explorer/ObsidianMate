@@ -3,7 +3,7 @@
 import os
 from string import Template
 
-instructions = Template(
+INSTRUCTIONS = Template(
     "\n".join(
     [
         "You are a Conversation Summarization Agent.",

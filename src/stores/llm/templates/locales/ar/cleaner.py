@@ -2,7 +2,7 @@
 
 import os
 
-instruction = "\n".join(
+INSTRUCTIONS = "\n".join(
     [
         "أنت وكيل متخصص في تنقية المحادثات (Conversation Cleaning Agent).",
         "",

@@ -2,7 +2,7 @@
 
 import os
 
-instruction = "\n".join(
+INSTRUCTIONS = "\n".join(
     [
         "You are a Conversation Cleaning Agent.",
         "",

@@ -9,11 +9,10 @@ from google.adk.sessions.database_session_service import DatabaseSessionService
 from google.adk.runners import Runner
 from fastapi import FastAPI
 from core.agents import root_agent
-from routes import base, data
+from routes import base, data, nlp
 from utils import get_settings
 
 logger = logging.getLogger("uvicorn")
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
@@ -24,6 +23,7 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
     # Startup
     settings = get_settings()
     app.state.settings = settings
+    os.environ["GOOGLE_API_KEY"] = app.state.settings.GOOGLE_API_KEY
     app.state.db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
     app.state.session_service = DatabaseSessionService(db_url=app.state.db_url)
     app.state.runner = Runner(
@@ -42,6 +42,8 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
 app = FastAPI(lifespan=lifespan)
 app.include_router(base.base_router)
 app.include_router(data.data_router)
+app.include_router(nlp.nlp_router)
+
 
 
 def main():

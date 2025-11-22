@@ -3,7 +3,7 @@
 import os
 import random
 import string
-from utils.config_utils import get_settings, Settings
+from utils.config_utils import get_settings
 
 
 class BaseController:

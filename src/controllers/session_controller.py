@@ -91,7 +91,23 @@ class SessionController(BaseController):
     async def get_session(
         self, app_name: str, user_id: str, session_id: str
     ) -> Optional[Session]:
-        pass
+        """
+        Retrieve a user session from the session service.
+
+        Args:
+            app_name (str): Name of the application.
+            user_id (str): Unique identifier of the user.
+            session_id (str): Unique identifier of the session to retrieve.
+
+        Returns:
+            Optional[Session]: The retrieved session instance, or None if not found.
+        """
+
+        session = await self.session_service.get_session(
+            app_name=app_name, user_id=user_id, session_id=session_id
+        )
+        return session
+
     async def list_sessions(self, app_name, user_id=None):
         pass
 

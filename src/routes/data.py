@@ -58,7 +58,7 @@ async def create_session(request: Request, user_id: str):
     )
 
 
-@data_router.get("/get_session/{session_id}")
+@data_router.get("/get_session/{session_id}/{user_id}")
 async def get_session(session_id: str, user_id: str, request: Request):
     """
     Retrieve a session by its ID.
@@ -98,9 +98,7 @@ async def get_session(session_id: str, user_id: str, request: Request):
     )
 
 
-
-
-@data_router.get("list_sessions/{user_id}")
+@data_router.get("/list_sessions/{user_id}")
 async def list_sessions(request: Request, user_id: str):
     """Retrieve all sessions belonging to a specific user.
 
@@ -120,6 +118,7 @@ async def list_sessions(request: Request, user_id: str):
               with the user.
     """
 
+    print("Here")
     app_state = request.app.state
     session_controller = SessionController(session_service=app_state.session_service)
     sessions = await session_controller.list_sessions(
@@ -140,8 +139,7 @@ async def list_sessions(request: Request, user_id: str):
     )
 
 
-# remove session API
-@data_router.delete("/delete_session/{session_id}")
+@data_router.delete("/delete_session/{session_id}/{user_id}")
 async def delete_session(session_id: str, user_id: str, request: Request):
     """
     Delete a user session by its session ID.
@@ -152,7 +150,7 @@ async def delete_session(session_id: str, user_id: str, request: Request):
         request (Request): FastAPI request object used for accessing application state.
 
     Returns:
-        JSONResponse: 
+        JSONResponse:
             - 200 OK if the session was successfully deleted.
             - 404 NOT FOUND if the session does not exist.
 
@@ -169,8 +167,6 @@ async def delete_session(session_id: str, user_id: str, request: Request):
         return JSONResponse(
             content={
                 "signal": "Session deletion failed. Session not found.",
-                "session_id": session_id,
-                "user_id": user_id,
             },
             status_code=status.HTTP_404_NOT_FOUND,
         )
@@ -183,36 +179,50 @@ async def delete_session(session_id: str, user_id: str, request: Request):
         status_code=status.HTTP_200_OK,
     )
 
-# remove all user's sessions API
-@data_router.delete("/delete_session/{user_id}")
+
+@data_router.delete("/delete_sessions/{user_id}")
 async def delete_sessions(user_id: str, request: Request):
-    
+    """
+    Delete all sessions belonging to a specific user.
+
+    This endpoint removes all stored sessions associated with the given user ID.
+    It uses the application's session service through the SessionController.
+    If no sessions exist for the user, a 404 response is returned.
+
+    Args:
+        user_id (str): The ID of the user whose sessions should be deleted.
+        request (Request): The incoming FastAPI request, providing access
+            to application state and configuration.
+
+    Returns:
+        JSONResponse: A JSON response indicating success or failure.
+            - 404 if no sessions were found.
+            - 200 with the number of deleted sessions otherwise.
+    """
+
     app_state = request.app.state
     app_name = request.app.state.settings.APP_NAME
 
     session_controller = SessionController(session_service=app_state.session_service)
 
     ## Delete all user's sessions
-    result = session_controller.delete_sessions(
-        app_name=app_name,
-        user_id=user_id
+    result = await session_controller.delete_sessions(
+        app_name=app_name, user_id=user_id
     )
 
-    if not result:
+    if not result[0]:
         return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
-            content={
-                "signal": "No sessions found for user_id=%s. Connot delete."
-            }
+            content={"signal": "No sessions found. Cannot delete.", "user_id": user_id},
         )
-    
+
     return JSONResponse(
         content={
-            "signal": "All sessions for user_id=%s are deleted successfully!"
+            "signal": "All sessions are deleted successfully!",
+            "user_id": user_id,
+            "number_of_sessions_deleted": result[1],
         }
     )
-    
-
 
 
 def main():

@@ -183,6 +183,37 @@ async def delete_session(session_id: str, user_id: str, request: Request):
         status_code=status.HTTP_200_OK,
     )
 
+# remove all user's sessions API
+@data_router.delete("/delete_session/{user_id}")
+async def delete_sessions(user_id: str, request: Request):
+    
+    app_state = request.app.state
+    app_name = request.app.state.settings.APP_NAME
+
+    session_controller = SessionController(session_service=app_state.session_service)
+
+    ## Delete all user's sessions
+    result = session_controller.delete_sessions(
+        app_name=app_name,
+        user_id=user_id
+    )
+
+    if not result:
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={
+                "signal": "No sessions found for user_id=%s. Connot delete."
+            }
+        )
+    
+    return JSONResponse(
+        content={
+            "signal": "All sessions for user_id=%s are deleted successfully!"
+        }
+    )
+    
+
+
 
 def main():
     """Entry Point for the Program."""

@@ -2,7 +2,7 @@
 
 import os
 import logging
-from fastapi import APIRouter, Request, status
+from fastapi import APIRouter, Request, status, Query
 from fastapi.responses import JSONResponse
 from controllers import SessionController, NLPController
 
@@ -27,11 +27,11 @@ async def health_check():
     )
 
 
-@nlp_router.post("/chat/{session_id}")
+@nlp_router.post("/chat/{session_id}/{user_id}")
 async def answer_question(request: Request,
                           session_id: str,
                           user_id: str,
-                          query: str
+                          query: str=Query(..., default_factory=str, description="The user's question to be answered.")
         ):
     """
     Endpoint to answer a user's question within a session.

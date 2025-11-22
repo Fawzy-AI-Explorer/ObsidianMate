@@ -57,8 +57,7 @@ class SessionController(BaseController):
     async def delete_session(
         self, app_name: Optional[str], user_id: str, session_id: str
     ):
-        """
-        Delete an existing session.
+        """Delete an existing session.
 
         Args:
             app_name (Optional[str]): Name of the application. If ``None``,

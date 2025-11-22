@@ -20,15 +20,18 @@ class SessionController(BaseController):
                              session_id: str
             ):
         """
-        Delete a session by its ID.
+        Delete an existing session.
+
         Args:
-            app_name (Optional[str]): The name of the application. If None, defaults to
-                the application name from settings.
-            user_id (str): The ID of the user.
-            session_id (str): The ID of the session to delete.
+            app_name (Optional[str]): Name of the application. If ``None``,
+                the default application name from settings is used.
+            user_id (str): Unique identifier of the user who owns the session.
+            session_id (str): Unique identifier of the session to be deleted.
+
         Returns:
-            None
-        """
+            None: This method does not return a value.
+
+    """
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
         await self.session_service.delete_session(

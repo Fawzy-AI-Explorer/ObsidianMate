@@ -17,7 +17,7 @@ RETRY_HTTP_STATUS_CODE: [429, 500, 503, 504]
 
 # -------------- Model Config --------------
 CHATT_MODEL_NAME: "gemini-2.5-flash-lite"
-CLEAN_MODEL_NAME: "gemini-2.5-flash-lite"
+FILTER_MODEL_NAME: "gemini-2.5-flash-lite"
 SUMMARIZE_MODEL_NAME: "gemini-2.5-flash-lite"
 MARKDOWN_MODEL_NAME: "gemini-2.5-flash-lite"
 DIAGRAM_MODEL_NAME: "gemini-2.5-flash-lite"

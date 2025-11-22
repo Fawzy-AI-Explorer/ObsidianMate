@@ -1,7 +1,11 @@
+"""Data Routes Module."""
+
 import os
 import logging
 from fastapi import APIRouter, Request, status
 from fastapi.responses import JSONResponse
+
+from controllers import SessionController
 
 logger = logging.getLogger("uvicorn")
 data_router = APIRouter(prefix="/api/v1/data", tags=["api_v1", "data"])
@@ -18,6 +22,47 @@ async def add_session(request: Request, session_id: str, user_id: str):
         status_code=status.HTTP_200_OK,
     )
 
+
+@data_router.get("/get_session/{session_id}")
+async def get_session(session_id: str, user_id: str, request: Request):
+    """
+    Retrieve a session by its ID.
+
+    Args:
+        session_id (str): The ID of the session to retrieve.
+        user_id (str): The ID of the user who owns the session.
+        request (Request): The incoming HTTP request.
+
+     Returns:
+        JSONResponse:
+            - 200 OK with session information when the session exists.
+            - 404 NOT FOUND if the session does not exist.
+    """
+
+    app_state = request.app.state
+    app_name = request.app.state.settings.APP_NAME
+
+    session_controller = SessionController(session_service=app_state.session_service)
+
+    session = await session_controller.get_session(
+        app_name=app_name, user_id=user_id, session_id=session_id
+    )
+    if session is None:
+        return JSONResponse(
+            content={"signal": "Session not found."},
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
+    return JSONResponse(
+        content={
+            "signal": "session_retrieved",
+            "session_id": session.id,
+            "user_id": session.user_id,
+            # "session_data": session.dict(),
+        },
+        status_code=status.HTTP_200_OK,
+    )
+
+
 # remove session API
 @data_router.delete("/delete_session/{session_id}")
 async def delete_session(session_id: str):
@@ -33,8 +78,7 @@ async def delete_session(session_id: str):
     """
 
     ## Check if session exists
-    
-    
+
     ## get Session By ID
 
     ## Delete Session
@@ -43,10 +87,10 @@ async def delete_session(session_id: str):
         content={
             "signal": f"Session {session_id} deleted successfully.",
             "session_id": session_id,
-            },
+        },
         status_code=status.HTTP_200_OK,
     )
- 
+
 
 def main():
     """Entry Point for the Program."""
@@ -57,4 +101,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

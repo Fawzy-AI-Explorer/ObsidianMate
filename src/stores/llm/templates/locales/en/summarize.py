@@ -1,8 +1,10 @@
 """Conversation Summarizing Agent Instructions - English Locale."""
 
 import os
+from string import Template
 
-instructions = "\n".join(
+instructions = Template(
+    "\n".join(
     [
         "You are a Conversation Summarization Agent.",
         "",
@@ -33,7 +35,7 @@ instructions = "\n".join(
         "Purpose:",
         "Your output should help someone quickly understand the main ideas from the cleaned conversation, as if reading a brief technical note or documentation summary.",
     ]
-)
+))
 
 
 def main():

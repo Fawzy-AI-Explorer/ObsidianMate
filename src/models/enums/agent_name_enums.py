@@ -27,6 +27,7 @@ class AgentNameEnum(StrEnum):
     DRAWING_AGENT = "Drawing Agent"
     MARKDOWN_FORMATTER_AGENT = "Markdown Formatter Agent"
     OBSIDIAN_CONTROLLER_AGENT = "Obsidian Controller Agent"
+    ROOT_AGENT = "Root Agent"
 
 
 def main():

@@ -110,7 +110,9 @@ class SessionController(BaseController):
         )
         return session
 
-    async def list_sessions(self, app_name: Optional[str], user_id: str) -> list[Session]:
+    async def list_sessions(
+        self, app_name: Optional[str], user_id: str
+    ) -> list[Session]:
         """List all sessions for a given application and optionally for a specific user.
 
         Args:
@@ -129,7 +131,9 @@ class SessionController(BaseController):
         )
         return sessions.sessions
 
-    async def delete_sessions(self, app_name: Optional[str], user_id: str) -> bool:
+    async def delete_sessions(
+        self, app_name: Optional[str], user_id: str
+    ) -> tuple[bool, int]:
         """
         Delete all sessions for a given user.
 
@@ -151,7 +155,7 @@ class SessionController(BaseController):
                 "No sessions found for user_id=%s. Cannot delete.",
                 user_id,
             )
-            return False
+            return False, 0
 
         for session in sessions:
             await self.delete_session(
@@ -159,7 +163,7 @@ class SessionController(BaseController):
                 user_id=user_id,
                 session_id=session.id,
             )
-        return True
+        return True, len(sessions)
 
 
 def main():

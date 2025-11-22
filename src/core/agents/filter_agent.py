@@ -23,6 +23,7 @@ Filter_Agent = Agent(
     model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
     description="An agent that filters irrelevant content from user inputs or data streams.",
     instruction=template_parser.get("filter", "INSTRUCTIONS"),  # type: ignore
+    output_key="filtered_content",
 )
 
 

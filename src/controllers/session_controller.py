@@ -90,7 +90,7 @@ class SessionController(BaseController):
         return True
 
     async def get_session(
-        self, app_name: str, user_id: str, session_id: str
+        self, app_name: Optional[str], user_id: str, session_id: str
     ) -> Optional[Session]:
         """
         Retrieve a user session from the session service.
@@ -103,13 +103,14 @@ class SessionController(BaseController):
         Returns:
             Optional[Session]: The retrieved session instance, or None if not found.
         """
+        app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
         session = await self.session_service.get_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
         return session
 
-    async def list_sessions(self, app_name: str, user_id: str) -> list[Session]:
+    async def list_sessions(self, app_name: Optional[str], user_id: str) -> list[Session]:
         """List all sessions for a given application and optionally for a specific user.
 
         Args:
@@ -128,7 +129,7 @@ class SessionController(BaseController):
         )
         return sessions.sessions
 
-    async def delete_sessions(self, app_name: str, user_id: str) -> bool:
+    async def delete_sessions(self, app_name: Optional[str], user_id: str) -> bool:
         """
         Delete all sessions for a given user.
 
@@ -139,6 +140,7 @@ class SessionController(BaseController):
         Returns:
             bool: True if sessions were successfully deleted, False otherwise.
         """
+        app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
         sessions = await self.list_sessions(
             app_name=app_name,

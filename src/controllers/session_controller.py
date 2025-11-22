@@ -129,9 +129,11 @@ class SessionController(BaseController):
     async def delete_sessions(self, app_name: str, user_id: str) -> bool:
         """
         Delete all sessions for a given user.
+
         Args:
             app_name (str): Name of the application.
             user_id (str): Unique identifier of the user whose sessions are to be deleted.
+
         Returns:
             bool: True if sessions were successfully deleted, False otherwise.
         """
@@ -150,7 +152,7 @@ class SessionController(BaseController):
         for session in sessions:
             await self.delete_session(
                 app_name=app_name,
-                user_id=user_id, 
+                user_id=user_id,
                 session_id=session.session_id,
             )
         return True

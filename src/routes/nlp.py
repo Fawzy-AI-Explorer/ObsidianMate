@@ -11,22 +11,6 @@ logger = logging.getLogger("uvicorn")
 nlp_router = APIRouter(prefix="/api/v1/nlp", tags=["api_v1", "nlp"])
 
 
-@nlp_router.get("/health")
-async def health_check():
-    """
-    Health check endpoint to verify the NLP service is operational.
-
-    Returns:
-        JSONResponse: A response indicating the health status of the NLP service.
-    """
-    return JSONResponse(
-        content={
-            "signal": "nlp_service_healthy",
-        },
-        status_code=status.HTTP_200_OK,
-    )
-
-
 @nlp_router.post("/chat/{session_id}/{user_id}")
 async def answer_question(request: Request,
                           session_id: str,
@@ -66,7 +50,7 @@ async def answer_question(request: Request,
 
     nlp_controller = NLPController(app_state.runner)
     answer = await nlp_controller.answer_query(session=session, query=query)
-    if answer is None:
+    if answer == "":
         return JSONResponse(
             content={
                 "signal": "answer_failed",

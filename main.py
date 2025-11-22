@@ -6,7 +6,9 @@ import os
 import logging
 from contextlib import asynccontextmanager
 from google.adk.sessions.database_session_service import DatabaseSessionService
+from google.adk.runners import Runner
 from fastapi import FastAPI
+from core.agents import root_agent
 from routes import base, data
 from utils import get_settings
 
@@ -24,6 +26,11 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
     app.state.settings = settings
     app.state.db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
     app.state.session_service = DatabaseSessionService(db_url=app.state.db_url)
+    app.state.runner = Runner(
+        agent=root_agent,
+        app_name=settings.APP_NAME,
+        session_service=app.state.session_service,
+    )
     logger.info("Database Connection Stablished")
 
     yield  # The application runs here

@@ -1,6 +1,7 @@
 import os
 from typing import Optional
 from google.adk.sessions import Session, BaseSessionService
+from google.adk.sessions.base_session_service import ListSessionsResponse
 from google.adk.errors.already_exists_error import AlreadyExistsError
 from controllers import BaseController
 from utils.logging_utils import setup_logger
@@ -57,8 +58,7 @@ class SessionController(BaseController):
     async def delete_session(
         self, app_name: Optional[str], user_id: str, session_id: str
     ) -> bool:
-        """
-        Delete an existing session.
+        """Delete an existing session.
 
         Args:
             app_name (Optional[str]): Name of the application. If ``None``,
@@ -108,8 +108,23 @@ class SessionController(BaseController):
         )
         return session
 
-    async def list_sessions(self, app_name, user_id=None):
-        pass
+    async def list_sessions(self, app_name: str, user_id: str) -> ListSessionsResponse:
+        """List all sessions for a given application and optionally for a specific user.
+
+        Args:
+            app_name (str): Name of the application. If ``None``, the default
+                application name from settings is used.
+            user_id (str): Unique identifier of the user whose
+                sessions should be listed.
+
+        Returns:
+            ListSessionsResponse: An object containing the list of retrieved sessions.
+        """
+
+        app_name = self.app_settings.APP_NAME if app_name is None else app_name
+        return await self.session_service.list_sessions(
+            app_name=app_name, user_id=user_id
+        )
 
     async def delete_sessions(self, app_name, user_id=None):
         pass

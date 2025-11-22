@@ -38,10 +38,17 @@ class Settings(BaseSettings):
 
     RETRY_ATTEMPS: int = Field(...)
     RETRY_EXP_BASE: int = Field(...)
-    RETRY_INITAL_RETRY: int = Field(...)
+    RETRY_INITAL_DELAY: int = Field(...)
     RETRY_HTTP_STATUS_CODE: list[int] = Field(...)
 
     SQLITE_DB_PATH: str = Field(...)
+
+    CHATT_MODEL_NAME: str = Field(...)
+    CLEAN_MODEL_NAME: str = Field(...)
+    SUMMARIZE_MODEL_NAME: str = Field(...)
+    MARKDOWN_MODEL_NAME: str = Field(...)
+    DIAGRAM_MODEL_NAME: str = Field(...)
+    WRITE_MODEL_NAME: str = Field(...)
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

@@ -28,7 +28,7 @@ class BaseController:
         self.files_dir = os.path.join(self.base_dir, "assets", "files")
         self.db_dir = os.path.join(self.base_dir, "assets", "database")
 
-    def generate_random_string(self, length: int = 12) -> str:
+    async def generate_random_string(self, length: int = 12) -> str:
         """Generate a random alphanumeric string of given length.
 
         Args:

@@ -100,6 +100,47 @@ async def get_session(session_id: str, user_id: str, request: Request):
 
 
 
+@data_router.get("list_sessions/{user_id}")
+async def list_sessions(request: Request, user_id: str):
+    """Retrieve all sessions belonging to a specific user.
+
+    Args:
+        request (Request): The incoming FastAPI request object containing
+            application state and configuration.
+        user_id (str): The unique identifier of the user whose sessions
+            should be listed.
+
+    Returns:
+        JSONResponse: A response containing:
+            - ``signal``: Status of the operation
+              (e.g., "list_sessions_success" or "no_sessions_found").
+            - ``user_id``: The user ID associated with the retrieved sessions.
+            - ``number_of_sessions_found`` (optional): Count of retrieved sessions.
+            - ``sessions_ids`` (optional): List of session IDs associated
+              with the user.
+    """
+
+    app_state = request.app.state
+    session_controller = SessionController(session_service=app_state.session_service)
+    sessions = await session_controller.list_sessions(
+        app_name=app_state.settings.APP_NAME, user_id=user_id
+    )
+    if len(sessions) == 0:
+        return JSONResponse(
+            content={"signal": "no_sessions_found"}, status_code=status.HTTP_200_OK
+        )
+
+    return JSONResponse(
+        content={
+            "signal": "list_sessions_success",
+            "user_id": user_id,
+            "number_of_sessions_found": len(sessions),
+            "sessions_ids": [session.id for session in sessions],
+        }
+    )
+
+
+# remove session API
 @data_router.delete("/delete_session/{session_id}")
 async def delete_session(session_id: str, user_id: str, request: Request):
     """

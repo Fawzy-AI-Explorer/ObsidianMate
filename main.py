@@ -20,10 +20,9 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
 
     # Startup
     settings = get_settings()
-    db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
-    session_service = DatabaseSessionService(db_url=db_url)
     app.state.settings = settings
-    app.state.session_service = session_service
+    app.state.db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
+    app.state.session_service = DatabaseSessionService(db_url=app.state.db_url)
 
     yield  # The application runs here
 

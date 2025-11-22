@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     RETRY_INITAL_RETRY: int = Field(...)
     RETRY_HTTP_STATUS_CODE: list[int] = Field(...)
 
+    SQLITE_DB_PATH: str = Field(...)
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     @classmethod

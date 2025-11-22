@@ -5,3 +5,4 @@ PyYAML==6.0.2
 fastapi==0.121.3
 uvicorn==0.38.0
 uv==0.9.11
+google-adk==1.19.0

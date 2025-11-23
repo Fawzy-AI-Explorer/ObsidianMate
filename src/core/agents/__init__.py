@@ -1,5 +1,5 @@
 from core.agents.chat_agent import ChatAgent
-from core.agents.summarization_agent import SummaryAgent
+from core.agents.summary_agent import SummaryAgent
 from core.agents.filter_agent import FilterAgent
 from core.agents.markdown_agent import MarkdownAgent
 from core.agents.root_agent import root_agent

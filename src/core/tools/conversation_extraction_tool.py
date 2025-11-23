@@ -1,4 +1,5 @@
 """tool to extract conversation"""
+
 from google.adk.sessions import Session
 
 
@@ -13,22 +14,19 @@ def extract_conversation(session: Session):
         Success example:
             {"status": "success", "session_events": [...]}
         Error example:
-            {"status": "error", "error_message": "..."} 
+            {"status": "error", "error_message": "..."}
     """
 
-    session_events = session.events # List of Event objects
+    session_events = session.events  # List of Event objects
     conversation = []
     author = "unknown"
     text = "no text"
     for event in session_events:
         if event.auther:
-                author = event.author
+            author = event.author
 
         if event.content and event.content.parts:
-            if (
-                event.content.parts[0].text != "None"
-                and event.content.parts[0].text
-            ):
+            if event.content.parts[0].text != "None" and event.content.parts[0].text:
                 text = event.content.parts[0].text
 
         conversation.append({"author": author, "text": text})

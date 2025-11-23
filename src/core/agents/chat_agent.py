@@ -3,7 +3,7 @@ from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.genai import types
 from utils.config_utils import get_settings
-from core.tools import google_search, SmartNotesPipelineTool
+from core.tools import google_search, smart_notes_pipeline_tool
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
 
@@ -22,7 +22,7 @@ chat_agent = Agent(
     model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",
     instruction=template_parser.get("chat", "INSTRUCTIONS"),  # type: ignore
-    tools=[google_search, SmartNotesPipelineTool],
+    tools=[google_search, smart_notes_pipeline_tool],
 )
 
 

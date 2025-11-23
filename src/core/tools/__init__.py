@@ -1,3 +1,6 @@
-from core.tools.google_search_tool import google_search
+"""Core Tools Package"""
 
-__all__ = ["google_search"]
+from core.tools.google_search_tool import google_search
+from core.tools.smart_notes_tool import SmartNotesPipelineTool
+
+__all__ = ["google_search", "SmartNotesPipelineTool"]

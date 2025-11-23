@@ -19,6 +19,12 @@ class AgentNameEnum(StrEnum):
             that structures content into Markdown format.
         OBSIDIAN_CONTROLLER_AGENT (str): Name for the agent
             that manages Obsidian note creation and updates.
+        ROOT_AGENT (str): Name for the root agent that orchestrates
+            and delegates tasks across agents.
+        SMART_NOTE_PIPELINE_AGENT (str): Name for the agent
+            that processes and generates structured smart notes through the pipeline.
+        EXTRACT_CONVERSATION_AGENT (str): Name for the agent responsible for extracting
+            relevant conversation segments for processing.
     """
 
     CHAT_AGENT = "ChatAgent"
@@ -29,6 +35,7 @@ class AgentNameEnum(StrEnum):
     OBSIDIAN_CONTROLLER_AGENT = "ObsidianControllerAgent"
     ROOT_AGENT = "RootAgent"
     SMART_NOTE_PIPELINE_AGENT = "SmartNotePipelineAgent"
+    EXTRACT_CONVERSATION_AGENT = "ExtractConversationAgent"
 
 
 def main():

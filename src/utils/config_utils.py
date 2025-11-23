@@ -50,6 +50,7 @@ class Settings(BaseSettings):
     MARKDOWN_MODEL_NAME: str = Field(...)
     DIAGRAM_MODEL_NAME: str = Field(...)
     WRITE_MODEL_NAME: str = Field(...)
+    Extract_Model_Name: str = Field(...)
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

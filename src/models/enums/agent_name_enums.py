@@ -21,13 +21,14 @@ class AgentNameEnum(StrEnum):
             that manages Obsidian note creation and updates.
     """
 
-    CHAT_AGENT = "Chat_Agent"
-    CONVERSATION_FILTER_AGENT = "Conversation_Filter_Agent"
-    SUMMARY_AGENT = "Summary_Agent"
-    DRAWING_AGENT = "Drawing_Agent"
-    MARKDOWN_FORMATTER_AGENT = "Markdown_Formatter_Agent"
-    OBSIDIAN_CONTROLLER_AGENT = "Obsidian_Controller_Agent"
-    ROOT_AGENT = "Root_Agent"
+    CHAT_AGENT = "ChatAgent"
+    CONVERSATION_FILTER_AGENT = "ConversationFilterAgent"
+    SUMMARY_AGENT = "SummaryAgent"
+    DRAWING_AGENT = "DrawingAgent"
+    MARKDOWN_FORMATTER_AGENT = "MarkdownFormatterAgent"
+    OBSIDIAN_CONTROLLER_AGENT = "ObsidianControllerAgent"
+    ROOT_AGENT = "RootAgent"
+    SMART_NOTE_PIPELINE_AGENT = "SmartNotePipelineAgent"
 
 
 def main():

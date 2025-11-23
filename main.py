@@ -8,7 +8,8 @@ from contextlib import asynccontextmanager
 from google.adk.sessions.database_session_service import DatabaseSessionService
 from google.adk.runners import Runner
 from fastapi import FastAPI
-from core.agents import root_agent
+# from core.agents import root_agent
+from core.agents.root_agent import root_agent
 from routes import base, data, nlp
 from utils import get_settings
 

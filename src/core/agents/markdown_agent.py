@@ -16,7 +16,7 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-MarkdownAgent = Agent(
+markdown_agent = Agent(
     name=AgentNameEnum.MARKDOWN_FORMATTER_AGENT,
     model=Gemini(model=app_settings.MARKDOWN_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",

@@ -1,13 +1,12 @@
 """ "Clean Agent Module."""
 
 import os
-from google.adk.agents import Agent, SequentialAgent, ParallelAgent, LoopAgent
-from google.adk.models.google_llm import Gemini
+from google.adk.agents import SequentialAgent
 from google.genai import types
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
-from core.agents import ChatAgent, FilterAgent, SummaryAgent
+from core.agents import chat_agent
 
 app_settings = get_settings()
 template_parser = TemplateParser()
@@ -21,7 +20,7 @@ retry_config = types.HttpRetryOptions(
 
 root_agent = SequentialAgent(
     name=AgentNameEnum.ROOT_AGENT,
-    sub_agents=[ChatAgent],
+    sub_agents=[chat_agent],
 )
 
 

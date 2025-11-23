@@ -9,12 +9,13 @@ def extract_conversation(session: Session):
 
     Args:
         session (Session): The session object containing events.
+
     Returns:
         Dictionary with status and session events.
         Success example:
-            {"status": "success", "session_events": [...]}
+            {"status": "success", "session_events": [{"author": "...", "text": "..."}, ...]}
         Error example:
-            {"status": "error", "error_message": "..."}
+            {"status": "error", "error_message": "No events found in the session."}
     """
 
     session_events = session.events  # List of Event objects

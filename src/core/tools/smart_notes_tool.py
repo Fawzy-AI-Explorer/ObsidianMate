@@ -3,16 +3,20 @@
 import os
 from google.adk.agents import SequentialAgent# , ParallelAgent
 from google.adk.tools import AgentTool
-from core.agents import filter_agent, summary_agent
+# from core.agents import SummaryAgent, ExtractConversationAgent, FilterAgent
+from core.agents.summary_agent import SummaryAgent
+from core.agents.extract_conversation_agent import ExtractConversationAgent
+from core.agents.filter_agent import FilterAgent
 from models.enums import AgentNameEnum
 
 
 smart_notes_pipeline_tool = AgentTool(
-    SequentialAgent(
+    agent = SequentialAgent(
         name=AgentNameEnum.SMART_NOTE_PIPELINE_AGENT,
         sub_agents=[
-            filter_agent,
-            summary_agent,
+            ExtractConversationAgent,
+            FilterAgent,
+            SummaryAgent,
         ],
     )
 )

@@ -4,7 +4,8 @@ import os
 from google.genai import types
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
-from core.tools import extract_conversation
+# from core.tools import extract_conversation
+from core.tools.conversation_extraction_tool import extract_conversation
 from models.enums import AgentNameEnum
 from utils.config_utils import get_settings
 from stores.llm.templates import TemplateParser
@@ -20,7 +21,7 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-extract_conversation_agent = Agent(
+ExtractConversationAgent = Agent(
     name=AgentNameEnum.EXTRACT_CONVERSATION_AGENT,
     model=Gemini(model=app_settings.EXTRACT_MODEL_NAME, retry_options=retry_config),
     description="An agent that extracts relevant conversation details from Data Base.",

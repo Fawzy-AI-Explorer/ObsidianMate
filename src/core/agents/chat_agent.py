@@ -3,7 +3,7 @@ from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.genai import types
 from utils.config_utils import get_settings
-from core.tools import google_search, smart_notes_pipeline_tool
+from core.tools.google_search_tool import google_search
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
 
@@ -17,12 +17,13 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
+
 chat_agent = Agent(
     name=AgentNameEnum.CHAT_AGENT,
     model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",
     instruction=template_parser.get("chat", "INSTRUCTIONS"),  # type: ignore
-    tools=[google_search, smart_notes_pipeline_tool],
+    tools=[google_search],
 )
 
 

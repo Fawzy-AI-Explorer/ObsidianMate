@@ -21,8 +21,9 @@ conversation_summary_agent = Agent(
     model=Gemini(model=app_settings.SUMMARIZE_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",
     instruction=template_parser.get("summarize", "INSTRUCTIONS"),  # type: ignore
-    output_key="summary"
+    output_key="conversation_summary",
 )
+
 
 def main():
     """Entry Point for the Program."""

@@ -3,26 +3,31 @@ Main script for the application.
 """
 
 import os
-import logging
 from contextlib import asynccontextmanager
+from fastapi import FastAPI
 from google.adk.sessions.database_session_service import DatabaseSessionService
 from google.adk.runners import Runner
-from fastapi import FastAPI
-from core.agents.root_agent import root_agent
-from routes import base, data, nlp
-from utils import get_settings
 
-logger = logging.getLogger("uvicorn")
+from core.obsidian_mate.agent import root_agent
+from routes import base, data, nlp
+from utils.config_utils import get_settings
+from utils.logging_utils import setup_logger
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
     """Manage application startup and shutdown events."""
 
-    logger.info("Application is starting up...")
-
     # Startup
     settings = get_settings()
+    logger = setup_logger(
+        log_file=__file__,
+        log_dir=get_settings().PATH_LOGS,
+        log_to_console=True,
+        file_mode="a",
+    )
+    logger.info("Application is starting up...")
+
     app.state.settings = settings
     os.environ["GOOGLE_API_KEY"] = app.state.settings.GOOGLE_API_KEY
     app.state.db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"

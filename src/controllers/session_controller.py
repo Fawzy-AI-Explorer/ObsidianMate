@@ -59,7 +59,7 @@ class SessionController(BaseController):
         return session
 
     async def delete_session(
-        self, app_name: Optional[str], user_id: str, session_id: str
+        self, app_name: Optional[str], user_id: str, session_id: str, verbose=True
     ) -> bool:
         """Delete an existing session.
 
@@ -75,7 +75,8 @@ class SessionController(BaseController):
 
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
-        self.logger.info("Attempting to delete an existing session.")
+        if verbose:
+            self.logger.info("Attempting to delete an existing session.")
         session = await self.get_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
@@ -90,9 +91,10 @@ class SessionController(BaseController):
         await self.session_service.delete_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
-        self.logger.info(
-            "Done deleting session. session_id=%s, user_id=%s", session_id, user_id
-        )
+        if verbose:
+            self.logger.info(
+                "Done deleting session. session_id=%s, user_id=%s", session_id, user_id
+            )
         return True
 
     async def get_session(
@@ -149,7 +151,8 @@ class SessionController(BaseController):
         sessions = sessions.sessions
         if len(sessions) == 0:
             self.logger.info("No sessions found. user_id=%s", user_id)
-        self.logger.info("Found %s sessions for user_id=%s", len(sessions), user_id)
+        else:
+            self.logger.info("Found %s sessions for user_id=%s", len(sessions), user_id)
         return sessions
 
     async def delete_sessions(
@@ -181,9 +184,7 @@ class SessionController(BaseController):
 
         for session in sessions:
             await self.delete_session(
-                app_name=app_name,
-                user_id=user_id,
-                session_id=session.id,
+                app_name=app_name, user_id=user_id, session_id=session.id, verbose=False
             )
         self.logger.info("All sessions for user_id=%s has beed deleted.", user_id)
         return True, len(sessions)

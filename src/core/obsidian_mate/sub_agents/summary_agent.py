@@ -16,8 +16,8 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-SummaryAgent = Agent(
-    name=AgentNameEnum.SUMMARY_AGENT,
+conversation_summary_agent = Agent(
+    name=AgentNameEnum.CONVERSATION_SUMMARY_AGENT,
     model=Gemini(model=app_settings.SUMMARIZE_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",
     instruction=template_parser.get("summarize", "INSTRUCTIONS"),  # type: ignore

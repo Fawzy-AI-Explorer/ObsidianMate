@@ -1,8 +1,9 @@
 """Module for Agent Tool."""
 
 import os
-from google.adk.agents import SequentialAgent# , ParallelAgent
-from google.adk.tools import AgentTool
+from google.adk.agents import SequentialAgent  # , ParallelAgent
+from google.adk.tools.agent_tool import AgentTool
+
 # from core.agents import SummaryAgent, ExtractConversationAgent, FilterAgent
 from core.agents.summary_agent import SummaryAgent
 from core.agents.extract_conversation_agent import ExtractConversationAgent
@@ -11,7 +12,7 @@ from models.enums import AgentNameEnum
 
 
 smart_notes_pipeline_tool = AgentTool(
-    agent = SequentialAgent(
+    agent=SequentialAgent(
         name=AgentNameEnum.SMART_NOTE_PIPELINE_AGENT,
         sub_agents=[
             ExtractConversationAgent,

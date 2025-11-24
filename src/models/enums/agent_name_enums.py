@@ -33,7 +33,7 @@ class AgentNameEnum(StrEnum):
     DRAWING_AGENT = "DrawingAgent"
     MARKDOWN_FORMATTER_AGENT = "MarkdownFormatterAgent"
     OBSIDIAN_CONTROLLER_AGENT = "ObsidianControllerAgent"
-    ROOT_AGENT = "ObsidianMateAgent"
+    OBSIDIAN_MATE_AGENT = "ObsidianMateAgent"
     SMART_NOTE_PIPELINE_AGENT = "SmartNotePipelineAgent"
     EXTRACT_CONVERSATION_AGENT = "ExtractConversationAgent"
 

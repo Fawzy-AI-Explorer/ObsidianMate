@@ -8,12 +8,12 @@ from contextlib import asynccontextmanager
 from google.adk.sessions.database_session_service import DatabaseSessionService
 from google.adk.runners import Runner
 from fastapi import FastAPI
-# from core.agents import root_agent
 from core.agents.root_agent import root_agent
 from routes import base, data, nlp
 from utils import get_settings
 
 logger = logging.getLogger("uvicorn")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
@@ -44,7 +44,6 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(base.base_router)
 app.include_router(data.data_router)
 app.include_router(nlp.nlp_router)
-
 
 
 def main():

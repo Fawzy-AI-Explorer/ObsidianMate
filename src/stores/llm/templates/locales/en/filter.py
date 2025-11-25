@@ -9,7 +9,6 @@ INSTRUCTIONS = Template(
             "You are a Conversation Cleaning Agent.",
             "",
             "Your job is to take a conversation between a human and an AI model and extract ONLY the meaningful technical/topic-related content.",
-            "The conversation will be available in {conversation} state key",
             "",
             "Remove completely:",
             "- Greetings (hi, hello, thanks, bye)",

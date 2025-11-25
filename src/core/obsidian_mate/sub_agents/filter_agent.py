@@ -7,6 +7,7 @@ from google.genai import types
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
+from google.adk.tools import preload_memory
 
 app_settings = get_settings()
 template_parser = TemplateParser()
@@ -24,6 +25,7 @@ conversation_filter_agent = Agent(
     description="An agent that filters irrelevant content from a conversation.",
     instruction=template_parser.get("filter", "INSTRUCTIONS"),  # type: ignore
     output_key="filtered_content",
+    tools=[preload_memory],
 )
 
 

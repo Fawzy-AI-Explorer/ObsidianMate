@@ -57,6 +57,7 @@ async def answer_question(request: Request,
             },
             status_code=status.HTTP_404_NOT_FOUND,
         )
+    await request.app.state.memory_service.add_session_to_memory(session)
     return JSONResponse(
         content={
             "signal": "answer_success",

@@ -21,13 +21,25 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
+
+async def auto_save_to_memory(callback_context):
+    """Automatically save session to memory after each agent turn."""
+    await callback_context._invocation_context.memory_service.add_session_to_memory(
+        callback_context._invocation_context.session
+    )
+
+
 obsidian_mate_agent = Agent(
     name=AgentNameEnum.OBSIDIAN_MATE_AGENT,
     model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
     description="An agent that help user by answering questions, summarizing conversation, "
     "and taking control of obsidian to take notes",
     instruction=template_parser.get("manage_conversation", "INSTRUCTIONS"),  # type: ignore
-    tools=[agent_tool.AgentTool(chat_agent), agent_tool.AgentTool(smart_notes_pipeline)],
+    tools=[
+        agent_tool.AgentTool(chat_agent),
+        agent_tool.AgentTool(smart_notes_pipeline),
+    ],
+    after_agent_callback=auto_save_to_memory,
 )
 
 root_agent = obsidian_mate_agent

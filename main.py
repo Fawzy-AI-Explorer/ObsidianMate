@@ -6,6 +6,7 @@ import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from google.adk.sessions.database_session_service import DatabaseSessionService
+from google.adk.memory import InMemoryMemoryService
 from google.adk.runners import Runner
 
 from core.obsidian_mate.agent import root_agent
@@ -32,10 +33,12 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
     os.environ["GOOGLE_API_KEY"] = app.state.settings.GOOGLE_API_KEY
     app.state.db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
     app.state.session_service = DatabaseSessionService(db_url=app.state.db_url)
+    app.state.memory_service = InMemoryMemoryService()
     app.state.runner = Runner(
         agent=root_agent,
         app_name=settings.APP_NAME,
         session_service=app.state.session_service,
+        memory_service=app.state.memory_service,
     )
     logger.info("Database Connection Stablished")
 

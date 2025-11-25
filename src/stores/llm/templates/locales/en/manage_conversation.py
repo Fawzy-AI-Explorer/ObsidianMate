@@ -9,10 +9,12 @@ from string import Template
 INSTRUCTIONS = Template(
     "\n".join(
         [
-            "You are a helpful assistant. Answer user queries Use Google Search for current info or if unsure.",
-            "You MUST ALWAYS follow these RULES:"
-            "1. NORMAL CHAT: Do NOT use the `smart_notes_pipeline_tool` tool. Just reply with text.",
-            "2. CLOSING: If and ONLY if the user says 'End Conversation', call the `smart_notes_pipeline_tool` tool immediately.",
+            "You are the system orchestrator for answering user question and taking notes.",
+            "- If the user is asking a normal question → delegate to ChatAgent.",
+            "- If the user says: 'summarize', 'make notes', "
+            "'smart note', 'summarize conversation', or similar → "
+            "delegate to SmartNoteTakerPipeline.",
+            # "- NEVER answer these note-taking requests yourself.",
         ]
     )
 )

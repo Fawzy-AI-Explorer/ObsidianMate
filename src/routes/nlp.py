@@ -65,3 +65,60 @@ async def answer_question(request: Request,
         },
         status_code=status.HTTP_200_OK,
     )
+
+
+@nlp_router.get("/chat_history/{session_id}/{user_id}")
+async def get_chat_history(request: Request,
+                           session_id: str,
+                           user_id: str
+    ):
+    """
+    Endpoint to retrieve the chat history of a session.
+    
+    Args:
+        request (Request): The FastAPI request object.
+        session_id (str): Unique identifier of the session.
+        user_id (str): Unique identifier of the user.
+    
+    Returns:
+        JSONResponse: 
+            - 200 OK with the chat history if successful.
+            - 400 BAD REQUEST if the session is not found.
+    """
+
+    app_state = request.app.state
+    session_controller = SessionController(session_service=app_state.session_service)
+
+    session = await session_controller.get_session(
+        app_name=app_state.settings.APP_NAME, user_id=user_id, session_id=session_id
+    )
+
+    if session is None:
+        return JSONResponse(
+            content={
+                "signal": "session_not_found",
+            },
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+
+    chat_history = [
+        {
+            "author": event.author, 
+            "text": event.content.parts[0].text
+        }
+
+        for event in session.events
+        if (
+            event.content and
+            event.content.parts and
+            event.content.parts[0].text not in ["", None, "null"]
+        )
+    ]
+
+    return JSONResponse(
+        content={
+            "signal": "chat_history_success",
+            "chat_history": chat_history,
+        },
+        status_code=status.HTTP_200_OK,
+    )

@@ -121,3 +121,72 @@ async def get_chat_history(request: Request,
         },
         status_code=status.HTTP_200_OK,
     )
+
+
+@nlp_router.get("/get_summary/{session_id}/{user_id}")
+async def get_session_summary(request: Request,
+                              session_id: str,
+                              user_id: str
+    ):
+    """
+    Endpoint to retrieve the summary of a session.
+    
+    Args:
+        request (Request): The FastAPI request object.
+        session_id (str): Unique identifier of the session.
+        user_id (str): Unique identifier of the user.
+    
+    Returns:
+        JSONResponse: 
+            - 200 OK with the session summary if successful.
+            - 400 BAD REQUEST if the session is not found.
+    """
+
+    app_state = request.app.state
+    session_controller = SessionController(session_service=app_state.session_service)
+
+    session = await session_controller.get_session(
+        app_name=app_state.settings.APP_NAME, user_id=user_id, session_id=session_id
+    )
+
+    if session is None:
+        return JSONResponse(
+            content={
+                "signal": "session_not_found",
+            },
+            status_code=status.HTTP_400_BAD_REQUEST,
+        )
+
+    chat_history = [
+        {
+            "author": event.author, 
+            "text": event.content.parts[0].text
+        }
+
+        for event in session.events
+        if (
+            event.content and
+            event.content.parts and
+            event.content.parts[0].text not in ["", None, "null"]
+        )
+    ]
+
+    query = "Summary" + "\n\n" + str(chat_history)
+
+    nlp_controller = NLPController(app_state.runner)
+    answer = await nlp_controller.answer_query(session=session, query=query)
+    if answer == "":
+        return JSONResponse(
+            content={
+                "signal": "answer_failed",
+            },
+            status_code=status.HTTP_404_NOT_FOUND,
+        )
+    await request.app.state.memory_service.add_session_to_memory(session)
+    return JSONResponse(
+        content={
+            "signal": "answer_success",
+            "answer": answer,
+        },
+        status_code=status.HTTP_200_OK,
+    )

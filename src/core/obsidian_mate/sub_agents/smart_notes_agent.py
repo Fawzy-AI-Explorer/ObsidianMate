@@ -1,5 +1,5 @@
 import os
-from google.adk.agents import Agent
+from google.adk.agents import Agent, SequentialAgent
 from google.adk.tools import agent_tool
 from google.adk.models.google_llm import Gemini
 from google.genai import types
@@ -21,18 +21,30 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-smart_notes_pipeline = Agent(
+
+
+smart_notes_pipeline = SequentialAgent(
     name=AgentNameEnum.SMART_NOTE_PIPELINE_AGENT,
-    model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
-    description="An agent that filters irrelevant content from a conversation, and summarize the conversation.",
-    instruction=template_parser.get("take_notes", "INSTRUCTIONS"),  # type: ignore
-    output_key="final_notes",
-    tools=[
-        agent_tool.AgentTool(conversation_filter_agent),
-        agent_tool.AgentTool(conversation_summary_agent),
-        preload_memory,
+    sub_agents=[
+        conversation_filter_agent,
+        conversation_summary_agent,
     ],
+    
 )
+
+
+# smart_notes_pipeline = SequentialAgent(
+#     name=AgentNameEnum.SMART_NOTE_PIPELINE_AGENT,
+#     model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
+#     description="An agent that filters irrelevant content from a conversation, and summarize the conversation.",
+#     instruction=template_parser.get("take_notes", "INSTRUCTIONS"),  # type: ignore
+#     output_key="final_notes",
+#     tools=[
+#         agent_tool.AgentTool(conversation_filter_agent),
+#         agent_tool.AgentTool(conversation_summary_agent),
+#         preload_memory,
+#     ],
+# )
 
 
 def main():

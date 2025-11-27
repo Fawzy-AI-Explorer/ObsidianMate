@@ -66,7 +66,6 @@ async def answer_question(request: Request,
         status_code=status.HTTP_200_OK,
     )
 
-
 @nlp_router.get("/chat_history/{session_id}/{user_id}")
 async def get_chat_history(request: Request,
                            session_id: str,

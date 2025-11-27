@@ -1,22 +1,23 @@
 """Module for Agent Tool."""
 
 import os
-from google.adk.agents import SequentialAgent# , ParallelAgent
-from google.adk.tools import AgentTool
+from google.adk.agents import SequentialAgent  # , ParallelAgent
+from google.adk.tools.agent_tool import AgentTool
+
 # from core.agents import SummaryAgent, ExtractConversationAgent, FilterAgent
-from core.agents.summary_agent import SummaryAgent
-from core.agents.extract_conversation_agent import ExtractConversationAgent
-from core.agents.filter_agent import FilterAgent
+from core.obsidian_mate.sub_agents.summary_agent import conversation_summary_agent
+from core.obsidian_mate.sub_agents.extract_conversation_agent import ExtractConversationAgent
+from core.obsidian_mate.sub_agents.filter_agent import conversation_filter_agent
 from models.enums import AgentNameEnum
 
 
 smart_notes_pipeline_tool = AgentTool(
-    agent = SequentialAgent(
+    agent=SequentialAgent(
         name=AgentNameEnum.SMART_NOTE_PIPELINE_AGENT,
         sub_agents=[
             ExtractConversationAgent,
-            FilterAgent,
-            SummaryAgent,
+            conversation_filter_agent,
+            conversation_summary_agent,
         ],
     )
 )

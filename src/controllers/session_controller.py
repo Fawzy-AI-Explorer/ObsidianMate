@@ -39,14 +39,15 @@ class SessionController(BaseController):
                 ``None`` if session creation or retrieval fails.
         """
 
+        self.logger.info("Attempting to create a new session.")
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
         try:
             session = await self.session_service.create_session(
                 app_name=app_name, user_id=user_id, session_id=session_id
             )
         except AlreadyExistsError:
-            self.logger.info(
-                "Session with session_id=%s for user_id=%s already exists. Gettings session...",
+            self.logger.warning(
+                "Session with session_id=%s for user_id=%s already exists. Getting session...",
                 session_id,
                 user_id,
             )
@@ -54,10 +55,11 @@ class SessionController(BaseController):
                 app_name=app_name, user_id=user_id, session_id=session_id
             )
 
+        self.logger.info("Done creating/retrieving a session.")
         return session
 
     async def delete_session(
-        self, app_name: Optional[str], user_id: str, session_id: str
+        self, app_name: Optional[str], user_id: str, session_id: str, verbose=True
     ) -> bool:
         """Delete an existing session.
 
@@ -73,6 +75,8 @@ class SessionController(BaseController):
 
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
+        if verbose:
+            self.logger.info("Attempting to delete an existing session.")
         session = await self.get_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
@@ -87,6 +91,10 @@ class SessionController(BaseController):
         await self.session_service.delete_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
+        if verbose:
+            self.logger.info(
+                "Done deleting session. session_id=%s, user_id=%s", session_id, user_id
+            )
         return True
 
     async def get_session(
@@ -103,11 +111,21 @@ class SessionController(BaseController):
         Returns:
             Optional[Session]: The retrieved session instance, or None if not found.
         """
+
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
+        self.logger.info("Attempting to retrieve an existing session.")
         session = await self.session_service.get_session(
             app_name=app_name, user_id=user_id, session_id=session_id
         )
+        if session is None:
+            self.logger.warning(
+                "No Session found with session_id=%s, user_id=%s", session_id, user_id
+            )
+        else:
+            self.logger.info(
+                "Session found. session_id=%s, user_id=%s", session_id, user_id
+            )
         return session
 
     async def list_sessions(
@@ -126,10 +144,16 @@ class SessionController(BaseController):
         """
 
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
+        self.logger.info("Attempting to retrieve all sessions for user_id=%s", user_id)
         sessions = await self.session_service.list_sessions(
             app_name=app_name, user_id=user_id
         )
-        return sessions.sessions
+        sessions = sessions.sessions
+        if len(sessions) == 0:
+            self.logger.info("No sessions found. user_id=%s", user_id)
+        else:
+            self.logger.info("Found %s sessions for user_id=%s", len(sessions), user_id)
+        return sessions
 
     async def delete_sessions(
         self, app_name: Optional[str], user_id: str
@@ -146,12 +170,13 @@ class SessionController(BaseController):
         """
         app_name = self.app_settings.APP_NAME if app_name is None else app_name
 
+        self.logger.warning("Attempting to delete all sessions for user_id=%s", user_id)
         sessions = await self.list_sessions(
             app_name=app_name,
             user_id=user_id,
         )
         if not sessions:
-            self.logger.warning(
+            self.logger.info(
                 "No sessions found for user_id=%s. Cannot delete.",
                 user_id,
             )
@@ -159,10 +184,9 @@ class SessionController(BaseController):
 
         for session in sessions:
             await self.delete_session(
-                app_name=app_name,
-                user_id=user_id,
-                session_id=session.id,
+                app_name=app_name, user_id=user_id, session_id=session.id, verbose=False
             )
+        self.logger.info("All sessions for user_id=%s has beed deleted.", user_id)
         return True, len(sessions)
 
 

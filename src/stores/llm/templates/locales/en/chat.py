@@ -9,9 +9,8 @@ from string import Template
 INSTRUCTIONS = Template(
     "\n".join(
         [
-            "You are a helpful assistant. Use Google Search for current info or if unsure.",
-            "When user Type **End conversation** you MUST call the `SmartNotePipelineAgent` tool "
-            "to Filter and Summarize the conversation."
+            "You are a helpful assistant. Answer user queries. ",
+            "Use Google Search for current info or if unsure."
         ]
     )
 )

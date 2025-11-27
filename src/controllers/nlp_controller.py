@@ -59,6 +59,7 @@ class NLPController(BaseController):
             self.logger.warning("Can't get answer for an empty query!")
             return ""
 
+        self.logger.info("Answering the query...")
         query_content = types.Content(role="user", parts=[types.Part(text=query)])
 
         answer = ""
@@ -74,6 +75,7 @@ class NLPController(BaseController):
                 ):
                     answer = event.content.parts[0].text
 
+        self.logger.info("Done answering the query")
         return answer
 
 

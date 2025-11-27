@@ -12,7 +12,7 @@ INSTRUCTIONS = Template(
         "All irrelevant or noisy parts have already been removed. Your task is NOT to clean it further, but ONLY to summarize it.",
         "",
         "YOUR JOB:",
-        "Produce a concise, clear, well-structured summary of the cleaned content.",
+        "Produce a concise, clear, well-structured summary of the {filtered_content}.",
         "",
         "Summarization Rules:",
         "- Keep ONLY meaningful information from the cleaned text.",

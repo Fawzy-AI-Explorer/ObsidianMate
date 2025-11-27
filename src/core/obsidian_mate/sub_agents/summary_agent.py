@@ -1,5 +1,3 @@
-""""Clean Agent Module."""
-
 import os
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
@@ -18,12 +16,12 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-FilterAgent = Agent(
-    name=AgentNameEnum.CONVERSATION_FILTER_AGENT,
-    model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
-    description="An agent that filters irrelevant content from user inputs or data streams.",
-    instruction=template_parser.get("filter", "INSTRUCTIONS"),  # type: ignore
-    output_key="filtered_content",
+conversation_summary_agent = Agent(
+    name=AgentNameEnum.CONVERSATION_SUMMARY_AGENT,
+    model=Gemini(model=app_settings.SUMMARIZE_MODEL_NAME, retry_options=retry_config),
+    description="An agent that summarize conversation.",
+    instruction=template_parser.get("summarize", "INSTRUCTIONS"),  # type: ignore
+    output_key="conversation_summary",
 )
 
 

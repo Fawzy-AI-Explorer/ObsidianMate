@@ -3,34 +3,42 @@ Main script for the application.
 """
 
 import os
-import logging
 from contextlib import asynccontextmanager
-from google.adk.sessions.database_session_service import DatabaseSessionService
-from google.adk.runners import Runner
 from fastapi import FastAPI
-# from core.agents import root_agent
-from core.agents.root_agent import root_agent
-from routes import base, data, nlp
-from utils import get_settings
+from google.adk.sessions.database_session_service import DatabaseSessionService
+from google.adk.memory import InMemoryMemoryService
+from google.adk.runners import Runner
 
-logger = logging.getLogger("uvicorn")
+from core.obsidian_mate.agent import root_agent
+from routes import base, data, nlp
+from utils.config_utils import get_settings
+from utils.logging_utils import setup_logger
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
     """Manage application startup and shutdown events."""
 
-    logger.info("Application is starting up...")
-
     # Startup
     settings = get_settings()
+    logger = setup_logger(
+        log_file=__file__,
+        log_dir=get_settings().PATH_LOGS,
+        log_to_console=True,
+        file_mode="a",
+    )
+    logger.info("Application is starting up...")
+
     app.state.settings = settings
     os.environ["GOOGLE_API_KEY"] = app.state.settings.GOOGLE_API_KEY
     app.state.db_url = f"sqlite+aiosqlite:///{app.state.settings.SQLITE_DB_PATH}"
     app.state.session_service = DatabaseSessionService(db_url=app.state.db_url)
+    app.state.memory_service = InMemoryMemoryService()
     app.state.runner = Runner(
         agent=root_agent,
         app_name=settings.APP_NAME,
         session_service=app.state.session_service,
+        memory_service=app.state.memory_service,
     )
     logger.info("Database Connection Stablished")
 
@@ -44,7 +52,6 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(base.base_router)
 app.include_router(data.data_router)
 app.include_router(nlp.nlp_router)
-
 
 
 def main():

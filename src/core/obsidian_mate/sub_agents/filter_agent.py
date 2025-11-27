@@ -1,11 +1,13 @@
+""" "Clean Agent Module."""
+
 import os
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.genai import types
 from utils.config_utils import get_settings
-from core.tools import google_search, smart_notes_pipeline_tool
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
+from google.adk.tools import preload_memory
 
 app_settings = get_settings()
 template_parser = TemplateParser()
@@ -17,12 +19,13 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-chat_agent = Agent(
-    name=AgentNameEnum.CHAT_AGENT,
-    model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
-    description="A simple agent that can answer general questions.",
-    instruction=template_parser.get("chat", "INSTRUCTIONS"),  # type: ignore
-    tools=[google_search, smart_notes_pipeline_tool],
+conversation_filter_agent = Agent(
+    name=AgentNameEnum.CONVERSATION_FILTER_AGENT,
+    model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
+    description="An agent that filters irrelevant content from a conversation.",
+    instruction=template_parser.get("filter", "INSTRUCTIONS"),  # type: ignore
+    output_key="filtered_content",
+    tools=[preload_memory],
 )
 
 

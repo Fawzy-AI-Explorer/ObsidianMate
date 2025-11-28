@@ -3,6 +3,7 @@ Utilities for loading and handling configuration files.
 """
 
 import os
+from typing import Optional
 from pathlib import Path
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict, YamlConfigSettingsSource
@@ -26,6 +27,7 @@ class Settings(BaseSettings):
     WSL_PASS: str = Field(...)
     SQLITE_DB_PATH: str = Field(...)
     GOOGLE_API_KEY: str = Field(...)
+    OPENAI_API_KEY: Optional[str] = Field(default=None)
 
     # .yaml
     APP_NAME: str = Field(...)

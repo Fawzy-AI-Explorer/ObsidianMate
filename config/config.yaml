@@ -16,10 +16,5 @@ RETRY_INITAL_DELAY: 1
 RETRY_HTTP_STATUS_CODE: [429, 500, 503, 504]
 
 # -------------- Model Config --------------
-CHATT_MODEL_NAME: "gemini-2.5-flash-lite"
-FILTER_MODEL_NAME: "gemini-2.5-flash-lite"
-SUMMARIZE_MODEL_NAME: "gemini-2.5-flash-lite"
-MARKDOWN_MODEL_NAME: "gemini-2.5-flash-lite"
-DIAGRAM_MODEL_NAME: "gemini-2.5-flash-lite"
-WRITE_MODEL_NAME: "gemini-2.5-flash-lite"
-EXTRACT_MODEL_NAME: "gemini-2.5-flash-lite"
+# DEFAULT_MODEL_NAME: "gpt-4o-mini"
+DEFAULT_MODEL_NAME: "gemini-2.5-flash-lite"

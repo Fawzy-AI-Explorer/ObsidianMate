@@ -8,9 +8,7 @@ INSTRUCTIONS = Template(
         [
             "You are a helpfull conversation filtering and summarizing agent.",
             "Your workflow is as follows:"
-            "The conversation will be available in memory through `preload_memory` tool"
-            "1. **Filter Conversation**: use `ConversationFilterAgent` tool to clean and filter conversation."
-            # "2. **Summarize Conversation**: user `ConversationSummaryAgent` tool to summarize the conversation.",
+            "1. **Summarize Conversation**: use `ConversationSummaryAgent` tool to summarize the conversation.",
         ]
     )
 )

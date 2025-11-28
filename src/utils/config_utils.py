@@ -1,3 +1,5 @@
+# pylint: disable=invalid-name
+
 """
 Utilities for loading and handling configuration files.
 """
@@ -5,7 +7,7 @@ Utilities for loading and handling configuration files.
 import os
 from typing import Optional
 from pathlib import Path
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict, YamlConfigSettingsSource
 from utils.logging_utils import setup_logger
 
@@ -23,11 +25,12 @@ class Settings(BaseSettings):
     """
 
     # .env
-    GH_PAT: str = Field(...)
-    WSL_PASS: str = Field(...)
+    GH_PAT: SecretStr = Field(...)
+    WSL_PASS: SecretStr = Field(...)
     SQLITE_DB_PATH: str = Field(...)
-    GOOGLE_API_KEY: str = Field(...)
-    OPENAI_API_KEY: Optional[str] = Field(default=None)
+    GOOGLE_API_KEY: SecretStr = Field(...)
+    OPENAI_API_KEY: Optional[SecretStr] = Field(default=None)
+    OBSIDIAN_API_KEY: SecretStr = Field(...)
 
     # .yaml
     APP_NAME: str = Field(...)
@@ -47,13 +50,13 @@ class Settings(BaseSettings):
     SQLITE_DB_PATH: str = Field(...)
 
     DEFAULT_MODEL_NAME: str = Field(...)
-    CHATT_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
-    FILTER_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
-    SUMMARIZE_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
-    MARKDOWN_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
-    DIAGRAM_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
-    WRITE_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
-    EXTRACT_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    CHATT_MODEL_NAME: str = Field(default="")
+    FILTER_MODEL_NAME: str = Field(default="")
+    SUMMARIZE_MODEL_NAME: str = Field(default="")
+    MARKDOWN_MODEL_NAME: str = Field(default="")
+    DIAGRAM_MODEL_NAME: str = Field(default="")
+    WRITE_MODEL_NAME: str = Field(default="")
+    EXTRACT_MODEL_NAME: str = Field(default="")
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
@@ -75,8 +78,27 @@ class Settings(BaseSettings):
                 yaml_file=Path("config/config.yaml"),
                 yaml_file_encoding="utf-8",
             ),  # YAML file
-            file_secret_settings,  # Secrets from files
+            file_secret_settings,
         )
+
+    def model_post_init(self, __context):  # pylint: disable=[W0221]
+        """
+        After loading all settings, fill any missing model names using DEFAULT_MODEL_NAME
+        """
+        if not self.CHATT_MODEL_NAME:
+            self.CHATT_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.FILTER_MODEL_NAME:
+            self.FILTER_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.SUMMARIZE_MODEL_NAME:
+            self.SUMMARIZE_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.MARKDOWN_MODEL_NAME:
+            self.MARKDOWN_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.DIAGRAM_MODEL_NAME:
+            self.DIAGRAM_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.WRITE_MODEL_NAME:
+            self.WRITE_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.EXTRACT_MODEL_NAME:
+            self.EXTRACT_MODEL_NAME = self.DEFAULT_MODEL_NAME
 
 
 def get_settings() -> Settings:
@@ -101,6 +123,8 @@ def main():
     print(settings.APP_NAME)  # From config.yaml
     print(settings.APP_VERSION)  # From config.yaml
     print(settings.GH_PAT)  # From .env
+    print(settings.OPENAI_API_KEY)
+    print(settings.CHATT_MODEL_NAME)
 
 
 if __name__ == "__main__":

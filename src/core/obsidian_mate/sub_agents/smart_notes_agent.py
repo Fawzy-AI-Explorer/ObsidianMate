@@ -1,12 +1,9 @@
 import os
-from google.adk.agents import Agent, SequentialAgent
-from google.adk.tools import agent_tool
+from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
 from google.genai import types
 
 from core.obsidian_mate.sub_agents.summary_agent import conversation_summary_agent
-from core.obsidian_mate.sub_agents.filter_agent import conversation_filter_agent
-from core.obsidian_mate.sub_agents.markdown_agent import markdown_agent
 from models.enums import AgentNameEnum
 from utils.config_utils import get_settings
 from stores.llm.templates import TemplateParser

@@ -1,6 +1,8 @@
 import os
 from core.obsidian_mate.agent import root_agent
+# from core.obsidian_mate.sub_agents import smart_notes_agent
 
+# root_agent = smart_notes_agent
 
 def main():
     """Entry Point for the Program."""

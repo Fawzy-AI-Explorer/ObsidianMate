@@ -31,6 +31,7 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: SecretStr = Field(...)
     OPENAI_API_KEY: Optional[SecretStr] = Field(default=None)
     OBSIDIAN_API_KEY: SecretStr = Field(...)
+    OBSIDIAN_HOST: str = Field(...)
 
     # .yaml
     APP_NAME: str = Field(...)

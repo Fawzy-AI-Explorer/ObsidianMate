@@ -10,11 +10,10 @@ INSTRUCTIONS = Template(
     "\n".join(
         [
             "You are the system orchestrator for answering user question and taking notes.",
-            "- If the user is asking a normal question → delegate to ChatAgent.",
+            "- If the user is asking a normal question → delegate to `ChatAgent`.",
             "- If the user says: 'summarize', 'make notes', "
             "'smart note', 'summarize conversation', or similar → "
-            "delegate to SmartNoteTakerPipeline.",
-            # "- NEVER answer these note-taking requests yourself.",
+            "delegate to `SmartNoteTakerPipeline`.",
         ]
     )
 )

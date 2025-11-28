@@ -4,12 +4,15 @@ import os
 from google.genai import types
 from google.adk.models.google_llm import Gemini
 from google.adk.agents import Agent
+from google.adk.tools import agent_tool
+from google.adk.tools.mcp_tool import McpToolset
+from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
+from mcp import StdioServerParameters
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
 from core.obsidian_mate.sub_agents.chat_agent import chat_agent
 from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
-from google.adk.tools import agent_tool
 
 app_settings = get_settings()
 template_parser = TemplateParser()
@@ -22,27 +25,52 @@ retry_config = types.HttpRetryOptions(
 )
 
 
-async def auto_save_to_memory(callback_context):
-    """Automatically save session to memory after each agent turn."""
-    await callback_context._invocation_context.memory_service.add_session_to_memory(
-        callback_context._invocation_context.session
-    )
-
+# obsidian_mate_agent = Agent(
+#     name=AgentNameEnum.OBSIDIAN_MATE_AGENT,
+#     model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
+#     description="An agent that help user by answering questions, summarizing conversation, "
+#     "and taking control of obsidian to take notes",
+#     instruction=template_parser.get("manage_conversation", "INSTRUCTIONS"),  # type: ignore
+#     tools=[
+#         agent_tool.AgentTool(chat_agent),
+#         agent_tool.AgentTool(smart_notes_pipeline),
+#     ],
+# )
 
 obsidian_mate_agent = Agent(
     name=AgentNameEnum.OBSIDIAN_MATE_AGENT,
     model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
-    description="An agent that help user by answering questions, summarizing conversation, "
-    "and taking control of obsidian to take notes",
-    instruction=template_parser.get("manage_conversation", "INSTRUCTIONS"),  # type: ignore
+    description="Helpfull obsidian support agent",
+    instruction="Help user by interacting with obsidian",
     tools=[
-        agent_tool.AgentTool(chat_agent),
-        agent_tool.AgentTool(smart_notes_pipeline),
+        McpToolset(
+            connection_params=StdioConnectionParams(
+                server_params=StdioServerParameters(
+                    command="docker",
+                    args=[
+                        "run",
+                        "-i",
+                        "--rm",
+                        "-e",
+                        "OBSIDIAN_HOST",
+                        "-e",
+                        "OBSIDIAN_API_KEY",
+                        "mcp/obsidian",
+                    ],
+                    env={
+                        "OBSIDIAN_HOST": "host.docker.internal",
+                        "OBSIDIAN_API_KEY": str(
+                            app_settings.OBSIDIAN_API_KEY.get_secret_value()  # pylint: disable=[E1101]
+                        ),
+                    },
+                )
+            )
+        )
     ],
-    after_agent_callback=auto_save_to_memory,
 )
 
 root_agent = obsidian_mate_agent
+# root_agent = smart_notes_pipeline
 
 
 def main():

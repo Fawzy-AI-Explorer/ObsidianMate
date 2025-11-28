@@ -47,13 +47,13 @@ class Settings(BaseSettings):
     SQLITE_DB_PATH: str = Field(...)
 
     DEFAULT_MODEL_NAME: str = Field(...)
-    CHATT_MODEL_NAME: Optional[str] = Field()
-    FILTER_MODEL_NAME: Optional[str] = Field()
-    SUMMARIZE_MODEL_NAME: Optional[str] = Field()
-    MARKDOWN_MODEL_NAME: Optional[str] = Field()
-    DIAGRAM_MODEL_NAME: Optional[str] = Field()
-    WRITE_MODEL_NAME: Optional[str] = Field()
-    EXTRACT_MODEL_NAME: Optional[str] = Field()
+    CHATT_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    FILTER_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    SUMMARIZE_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    MARKDOWN_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    DIAGRAM_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    WRITE_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
+    EXTRACT_MODEL_NAME: str = Field(default=DEFAULT_MODEL_NAME)
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
@@ -88,20 +88,7 @@ def get_settings() -> Settings:
     """
 
     logger.info("Loading application settings.")
-    app_settings = Settings()  # type: ignore
-    if app_settings.CHATT_MODEL_NAME is None:
-        app_settings.CHATT_MODEL_NAME = app_settings.DEFAULT_MODEL_NAME
-    if app_settings.FILTER_MODEL_NAME is None:
-        app_settings.FILTER_MODEL_NAME = app_settings.DEFAULT_MODEL_NAME
-    if app_settings.DIAGRAM_MODEL_NAME is None:
-        app_settings.DIAGRAM_MODEL_NAME = app_settings.DEFAULT_MODEL_NAME
-    if app_settings.EXTRACT_MODEL_NAME is None:
-        app_settings.EXTRACT_MODEL_NAME = app_settings.DEFAULT_MODEL_NAME
-    if app_settings.WRITE_MODEL_NAME is None:
-        app_settings.WRITE_MODEL_NAME = app_settings.DEFAULT_MODEL_NAME
-    if app_settings.MARKDOWN_MODEL_NAME is None:
-        app_settings.MARKDOWN_MODEL_NAME = app_settings.DEFAULT_MODEL_NAME
-    return app_settings
+    return Settings()  # type: ignore
 
 
 def main():

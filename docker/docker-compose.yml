@@ -1,0 +1,17 @@
+services:
+  obsidian-mcp:
+    image: mcp/obsidian:latest
+    container_name: obsidian-mcp
+    restart: unless-stopped
+    stdin_open: true
+    tty: false
+
+    environment:
+      OBSIDIAN_HOST: "host.docker.internal"
+      OBSIDIAN_API_KEY: "${OBSIDIAN_API_KEY}"
+
+    env_file:
+      - ./.env
+
+    volumes:
+      - ./vault:/vault

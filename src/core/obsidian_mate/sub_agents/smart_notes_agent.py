@@ -8,9 +8,15 @@ from core.obsidian_mate.sub_agents.summary_agent import conversation_summary_age
 from models.enums import AgentNameEnum
 from utils.config_utils import get_settings
 from stores.llm.templates import TemplateParser
+from utils.logging_utils import setup_logger
 
 app_settings = get_settings()
 template_parser = TemplateParser()
+logger = setup_logger(
+    log_file = __file__,
+    log_dir = app_settings.PATH_LOGS,
+)
+
 
 retry_config = types.HttpRetryOptions(
     attempts=app_settings.RETRY_ATTEMPS,
@@ -27,6 +33,11 @@ smart_notes_pipeline = Agent(
     instruction=template_parser.get("take_notes", "INSTRUCTIONS"),  # type: ignore
     output_key="final_notes",
     sub_agents=[conversation_summary_agent],
+
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.SMART_NOTE_PIPELINE_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.SMART_NOTE_PIPELINE_AGENT),
+    before_model_callback=logger.info("Model is about to generate a response..."),
+    after_model_callback=logger.info("Model has generated a response."),
 )
 
 

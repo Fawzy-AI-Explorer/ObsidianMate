@@ -5,10 +5,14 @@ from google.genai import types
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
+from utils.logging_utils import setup_logger
 
 app_settings = get_settings()
 template_parser = TemplateParser()
-
+logger = setup_logger(
+    log_file = __file__,
+    log_dir = app_settings.PATH_LOGS,
+)
 retry_config = types.HttpRetryOptions(
     attempts=app_settings.RETRY_ATTEMPS,
     exp_base=app_settings.RETRY_EXP_BASE,
@@ -22,6 +26,11 @@ conversation_summary_agent = Agent(
     description="An agent that summarize conversation.",
     instruction=template_parser.get("summarize", "INSTRUCTIONS"),  # type: ignore
     output_key="conversation_summary",
+
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.CONVERSATION_SUMMARY_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.CONVERSATION_SUMMARY_AGENT),
+    before_model_callback=logger.info("Model is about to generate a response..."),
+    after_model_callback=logger.info("Model has generated a response."),
 )
 
 

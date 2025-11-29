@@ -1,4 +1,7 @@
-# ObsidianMate 🧠✨
+<div align="center">
+  <img src="assets/obsidian_logo.png" alt="ObsidianMate Logo" width="200">
+  <h1 id="obsidianmate-">ObsidianMate 🧠✨</h1>
+</div>
 
 ![Python](https://img.shields.io/badge/Python-3.12%2B-blue?style=for-the-badge&logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.118.3-009688?style=for-the-badge&logo=fastapi)
@@ -11,25 +14,24 @@
 
 ## 📖 Table of Contents
 
-- [ObsidianMate 🧠✨](#obsidianmate-)
-  - [📖 Table of Contents](#-table-of-contents)
-  - [🧐 Project Overview](#-project-overview)
-    - [Problem Statement](#problem-statement)
-    - [Solution Statement](#solution-statement)
-    - [Value Statement](#value-statement)
-  - [🚀 Features](#-features)
-  - [🏗 Architecture](#-architecture)
-  - [📂 Project Structure](#-project-structure)
-  - [🛠 Installation](#-installation)
-    - [Prerequisites](#prerequisites)
-    - [Steps](#steps)
-  - [💻 Usage](#-usage)
-    - [Running the API Server](#running-the-api-server)
-    - [Running with ADK Web](#running-with-adk-web)
-    - [Essential Tools and Utilities](#essential-tools-and-utilities)
-  - [🤝 Contributing](#-contributing)
-  - [📄 License](#-license)
-  - [👏 Acknowledgments](#-acknowledgments)
+- [📖 Table of Contents](#-table-of-contents)
+- [🧐 Project Overview](#-project-overview)
+  - [Problem Statement](#problem-statement)
+  - [Solution Statement](#solution-statement)
+  - [Value Statement](#value-statement)
+- [🚀 Features](#-features)
+- [🏗 Architecture](#-architecture)
+- [📂 Project Structure](#-project-structure)
+- [🛠 Installation](#-installation)
+  - [Prerequisites](#prerequisites)
+  - [Steps](#steps)
+- [💻 Usage](#-usage)
+  - [Running the API Server](#running-the-api-server)
+  - [Running with ADK Web](#running-with-adk-web)
+  - [Essential Tools and Utilities](#essential-tools-and-utilities)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [👏 Acknowledgments](#-acknowledgments)
 
 ---
 

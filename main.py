@@ -10,7 +10,7 @@ from google.adk.memory import InMemoryMemoryService
 from google.adk.runners import Runner
 
 from core.obsidian_mate.agent import root_agent
-from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
+# from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
 from routes import base, data, nlp
 from utils.config_utils import get_settings
 from utils.logging_utils import setup_logger

@@ -5,7 +5,6 @@ from google.genai import types
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
-from utils.agent_utils import suppress_output_callback
 
 app_settings = get_settings()
 template_parser = TemplateParser()
@@ -23,7 +22,6 @@ conversation_summary_agent = Agent(
     description="An agent that summarize conversation.",
     instruction=template_parser.get("summarize", "INSTRUCTIONS"),  # type: ignore
     output_key="conversation_summary",
-    after_agent_callback=suppress_output_callback,
 )
 
 

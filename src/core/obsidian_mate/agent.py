@@ -14,8 +14,13 @@ from core.obsidian_mate.sub_agents.obsidian_interaction_agent import obsidian_in
 from core.obsidian_mate.sub_agents.excalidraw_interaction_agent import excalidraw_interaction_agent
 from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
 
+from utils.logging_utils import setup_logger
 app_settings = get_settings()
 template_parser = TemplateParser()
+logger = setup_logger(
+    log_file = __file__,
+    log_dir = app_settings.PATH_LOGS,
+)
 
 retry_config = types.HttpRetryOptions(
     attempts=app_settings.RETRY_ATTEMPS,
@@ -37,6 +42,13 @@ obsidian_mate_agent = Agent(
         agent_tool.AgentTool(obsidian_interaction_agent),
         # agent_tool.AgentTool(excalidraw_interaction_agent),
     ],
+
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.OBSIDIAN_MATE_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.OBSIDIAN_MATE_AGENT),
+    before_model_callback=logger.info("Model is about to generate a response..."),
+    after_model_callback=logger.info("Model has generated a response."),
+    before_tool_callback=logger.info("Obsidiab Tool is about to be invoked..."),
+    after_tool_callback=logger.info("Obsidian Tool has been invoked."),
 )
 
 root_agent = obsidian_mate_agent

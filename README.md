@@ -56,6 +56,7 @@ ObsidianMate provides a unified AI agent interface that integrates directly with
 - **🤖 Intelligent Chat Agent**: A general-purpose assistant capable of answering questions and helping with brainstorming.
 - **📝 Smart Notes Pipeline**: Automatically filters irrelevant chit-chat from conversations and summarizes key points into clean, Markdown-formatted notes.
 - **📂 Obsidian Integration**: Directly interacts with your Obsidian vault to read and manage notes (powered by MCP).
+- **📺 YouTube Transcript Support**: Extract transcripts from YouTube videos for summarization and analysis.
 - **🎨 Excalidraw Support** (Coming Soon): Future integration for handling visual notes and diagrams.
 
 ---
@@ -69,6 +70,7 @@ ObsidianMate is built on a modular agentic architecture using the **Google Agent
     - `Chat Agent`: Handles general queries.
     - `Smart Notes Agent`: Processes and summarizes text.
     - `Obsidian Interaction Agent`: Manages vault operations via MCP.
+    - `YouTube Transcript Agent`: Extracts transcripts from YouTube videos.
 3. **Tools & MCP**: Uses the Model Context Protocol to securely connect to external tools like the Obsidian API and Dockerized services.
 4. **Backend**: A robust **FastAPI** server manages sessions and API endpoints.
 
@@ -191,4 +193,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Abdelrahman Salama
 
 Special thanks to the open-source community and the teams behind **FastAPI**, **Google ADK**, and **Obsidian**.
-

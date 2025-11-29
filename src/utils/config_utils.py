@@ -51,7 +51,7 @@ class Settings(BaseSettings):
     SQLITE_DB_PATH: str = Field(...)
 
     DEFAULT_MODEL_NAME: str = Field(...)
-    CHATT_MODEL_NAME: str = Field(default="")
+    CHAT_MODEL_NAME: str = Field(default="")
     FILTER_MODEL_NAME: str = Field(default="")
     SUMMARIZE_MODEL_NAME: str = Field(default="")
     MARKDOWN_MODEL_NAME: str = Field(default="")
@@ -86,8 +86,8 @@ class Settings(BaseSettings):
         """
         After loading all settings, fill any missing model names using DEFAULT_MODEL_NAME
         """
-        if not self.CHATT_MODEL_NAME:
-            self.CHATT_MODEL_NAME = self.DEFAULT_MODEL_NAME
+        if not self.CHAT_MODEL_NAME:
+            self.CHAT_MODEL_NAME = self.DEFAULT_MODEL_NAME
         if not self.FILTER_MODEL_NAME:
             self.FILTER_MODEL_NAME = self.DEFAULT_MODEL_NAME
         if not self.SUMMARIZE_MODEL_NAME:
@@ -125,7 +125,7 @@ def main():
     print(settings.APP_VERSION)  # From config.yaml
     print(settings.GH_PAT)  # From .env
     print(settings.OPENAI_API_KEY)
-    print(settings.CHATT_MODEL_NAME)
+    print(settings.CHAT_MODEL_NAME)
 
 
 if __name__ == "__main__":

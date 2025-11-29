@@ -3,7 +3,7 @@
 import os
 from google.genai import types
 from google.adk.models.google_llm import Gemini
-# from google.adk.models.lite_llm import LiteLlm
+from google.adk.models.lite_llm import LiteLlm
 from google.adk.agents import Agent
 from google.adk.tools import agent_tool
 from utils.config_utils import get_settings
@@ -27,11 +27,10 @@ retry_config = types.HttpRetryOptions(
 
 obsidian_mate_agent = Agent(
     name=AgentNameEnum.OBSIDIAN_MATE_AGENT,
-    model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
-    # model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
+    # model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
+    model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
     description="Helpfull obsidian support agent",
-    # instruction="Help user by interacting with obsidian",
-    instruction=template_parser.get("root", "INSTRUCTIONS"),
+    instruction=template_parser.get("root", "INSTRUCTIONS"),  # type: ignore
     tools=[
         agent_tool.AgentTool(chat_agent),
         agent_tool.AgentTool(smart_notes_pipeline),

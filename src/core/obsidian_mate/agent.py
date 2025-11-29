@@ -10,9 +10,9 @@ from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
 from core.obsidian_mate.sub_agents.chat_agent import chat_agent
+from core.obsidian_mate.sub_agents.obsidian_interaction_agent import obsidian_interaction_agent
+from core.obsidian_mate.sub_agents.excalidraw_interaction_agent import excalidraw_interaction_agent
 from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
-from core.tools.obsidian_interaction_tool import obsidian_tool
-from core.tools.excalidraw_interaction_tool import excalidraw_tool
 
 app_settings = get_settings()
 template_parser = TemplateParser()
@@ -34,8 +34,8 @@ obsidian_mate_agent = Agent(
     tools=[
         agent_tool.AgentTool(chat_agent),
         agent_tool.AgentTool(smart_notes_pipeline),
-        obsidian_tool,
-        # excalidraw_tool,
+        agent_tool.AgentTool(obsidian_interaction_agent),
+        agent_tool.AgentTool(excalidraw_interaction_agent),
     ],
 )
 

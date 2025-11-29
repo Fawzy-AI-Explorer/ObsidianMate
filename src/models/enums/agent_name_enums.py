@@ -28,8 +28,7 @@ class AgentNameEnum(StrEnum):
     """
 
     CHAT_AGENT = "ChatAgent"
-    CONVERSATION_FILTER_AGENT = "ConversationFilterAgent"
-    CONVERSATION_SUMMARY_AGENT = "ConversationSummaryAgent"
+    TEXT_SUMMARY_AGENT = "TextSummaryAgent"
     DRAWING_AGENT = "ConversationDrawingAgent"
     MARKDOWN_FORMATTER_AGENT = "MarkdownFormatterAgent"
     OBSIDIAN_CONTROLLER_AGENT = "ObsidianControllerAgent"

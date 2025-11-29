@@ -1,6 +1,7 @@
 import os
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
+from google.adk.models.lite_llm import LiteLlm
 from google.genai import types
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
@@ -20,15 +21,16 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=app_settings.RETRY_HTTP_STATUS_CODE,
 )
 
-conversation_summary_agent = Agent(
-    name=AgentNameEnum.CONVERSATION_SUMMARY_AGENT,
-    model=Gemini(model=app_settings.SUMMARIZE_MODEL_NAME, retry_options=retry_config),
-    description="An agent that summarize conversation.",
+text_summary_agent = Agent(
+    name=AgentNameEnum.TEXT_SUMMARY_AGENT,
+    # model=Gemini(model=app_settings.SUMMARIZE_MODEL_NAME, retry_options=retry_config),
+    model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
+    description="An agent that summarize text.",
     instruction=template_parser.get("summarize", "INSTRUCTIONS"),  # type: ignore
-    output_key="conversation_summary",
+    output_key="text_summary",
 
-    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.CONVERSATION_SUMMARY_AGENT),
-    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.CONVERSATION_SUMMARY_AGENT),
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.TEXT_SUMMARY_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.TEXT_SUMMARY_AGENT),
     before_model_callback=logger.info("Model is about to generate a response..."),
     after_model_callback=logger.info("Model has generated a response."),
 )

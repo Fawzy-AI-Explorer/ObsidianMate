@@ -19,3 +19,4 @@ RETRY_HTTP_STATUS_CODE: [429, 500, 503, 504]
 DEFAULT_MODEL_NAME: "gpt-4o-mini"
 CHAT_MODEL_NAME: "gemini-2.5-flash-lite"
 SUMMARIZE_MODEL_NAME: "gemini-2.5-flash-lite"
+YT_TRANSCRIPT_MODEL_NAME: "gemini-2.5-flash-lite"

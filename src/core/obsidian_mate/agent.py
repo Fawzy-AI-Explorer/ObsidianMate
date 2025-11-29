@@ -13,7 +13,10 @@ from core.obsidian_mate.sub_agents.chat_agent import chat_agent
 from core.obsidian_mate.sub_agents.obsidian_interaction_agent import obsidian_interaction_agent
 from core.obsidian_mate.sub_agents.excalidraw_interaction_agent import excalidraw_interaction_agent
 from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
+from core.obsidian_mate.sub_agents.summary_agent import text_summary_agent
 from core.obsidian_mate.sub_agents.transcript_agent import yt_transcript_agent
+from core.tools.youtube_transcript_tool import transcript_tool
+
 
 from utils.logging_utils import setup_logger
 app_settings = get_settings()

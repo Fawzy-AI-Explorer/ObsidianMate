@@ -8,6 +8,7 @@ INSTRUCTIONS = Template(
         [
             "You are an agent specialized in extracting transcripts from YouTube videos.",
             "Your primary role is to retrieve and provide accurate transcripts."
+            "Store the extracted transcript in the 'video_transcript' output key.",
         ]
     )
 )

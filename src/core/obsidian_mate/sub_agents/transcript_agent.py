@@ -13,8 +13,8 @@ from utils.logging_utils import setup_logger
 app_settings = get_settings()
 template_parser = TemplateParser()
 logger = setup_logger(
-    log_file = __file__,
-    log_dir = app_settings.PATH_LOGS,
+    log_file=__file__,
+    log_dir=app_settings.PATH_LOGS,
 )
 
 retry_config = types.HttpRetryOptions(
@@ -30,10 +30,14 @@ yt_transcript_agent = Agent(
     model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
     description="A simple agent that can extract transcripts from YouTube videos.",
     instruction=template_parser.get("get_transcript", "INSTRUCTIONS"),  # type: ignore
+    output_key="video_transcript",
     tools=[transcript_tool],
-
-    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.YOUTUBE_TRANSCRIPT_AGENT),
-    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.YOUTUBE_TRANSCRIPT_AGENT),
+    before_agent_callback=logger.info(
+        "%s is starting...", AgentNameEnum.YOUTUBE_TRANSCRIPT_AGENT
+    ),
+    after_agent_callback=logger.info(
+        "%s is Finishing...", AgentNameEnum.YOUTUBE_TRANSCRIPT_AGENT
+    ),
     before_model_callback=logger.info("Model is about to generate a response..."),
     after_model_callback=logger.info("Model has generated a response."),
     before_tool_callback=logger.info("Tool is about to be invoked..."),

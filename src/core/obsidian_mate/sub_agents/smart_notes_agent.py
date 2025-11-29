@@ -4,7 +4,7 @@ from google.adk.models.google_llm import Gemini
 from google.adk.models.lite_llm import LiteLlm
 from google.genai import types
 
-from core.obsidian_mate.sub_agents.summary_agent import conversation_summary_agent
+from core.obsidian_mate.sub_agents.summary_agent import text_summary_agent
 from models.enums import AgentNameEnum
 from utils.config_utils import get_settings
 from stores.llm.templates import TemplateParser
@@ -32,7 +32,7 @@ smart_notes_pipeline = Agent(
     description="An agent that filters irrelevant content from a conversation, and summarize the conversation in markdown format.",
     instruction=template_parser.get("take_notes", "INSTRUCTIONS"),  # type: ignore
     output_key="final_notes",
-    sub_agents=[conversation_summary_agent],
+    sub_agents=[text_summary_agent],
 
     before_agent_callback=logger.info("%s is starting...", AgentNameEnum.SMART_NOTE_PIPELINE_AGENT),
     after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.SMART_NOTE_PIPELINE_AGENT),

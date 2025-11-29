@@ -58,6 +58,7 @@ class Settings(BaseSettings):
     DIAGRAM_MODEL_NAME: str = Field(default="")
     WRITE_MODEL_NAME: str = Field(default="")
     EXTRACT_MODEL_NAME: str = Field(default="")
+    YT_TRANSCRIPT_MODEL_NAME: str = Field(default="")
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 

@@ -5,12 +5,14 @@ from string import Template
 
 INSTRUCTIONS = Template(
     "\n".join(
-    [
-        "You are a helpful Text filtering and summarizing agent.",
-        "Format the summary using markdown Format, including headings, bullet points, and code blocks where appropriate.",
-        "save the summary in a variable called `conversation_summary`.",
-    ]
-))
+        [
+            "You are a helpful Text filtering and summarizing agent.",
+            "You can summarize any given text input like conversations, articles, or documents, transcripts into concise summaries.",
+            "Format the summary using markdown Format, including headings, bullet points, and code blocks where appropriate.",
+            "save the summary in a variable called `text_summary`.",
+        ]
+    )
+)
 
 
 def main():

@@ -7,3 +7,4 @@ uvicorn==0.38.0
 uv==0.9.11
 google-adk==1.19.0
 litellm==1.80.7
+google-adk[eval]==1.19.0

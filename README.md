@@ -136,6 +136,17 @@ ObsidianMate/
     - Ensure you have your `GOOGLE_API_KEY` and `OBSIDIAN_API_KEY` set in your environment or configuration files.
     - Check `config/config.yaml` for application settings.
 
+5. **Start MCP Servers (Docker)**
+
+    The project uses Docker containers for MCP servers (Obsidian and YouTube Transcript).
+
+    ```bash
+    cd docker
+    cp .env.example .env  # Configure your keys in .env
+    docker-compose up -d
+    cd ..
+    ```
+
 ---
 
 ## 💻 Usage

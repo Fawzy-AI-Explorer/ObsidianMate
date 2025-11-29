@@ -38,6 +38,7 @@ class AgentNameEnum(StrEnum):
     EXTRACT_CONVERSATION_AGENT = "ExtractConversationAgent"
     OBSIDIAN_INTERACTION_AGENT = "ObsidianInteractionAgent"
     EXCALIDRAW_INTERACTION_AGENT = "ExcalidrawInteractionAgent"
+    YOUTUBE_TRANSCRIPT_AGENT = "YouTubeTranscriptAgent"
 
 
 def main():

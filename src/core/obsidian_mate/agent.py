@@ -13,6 +13,7 @@ from core.obsidian_mate.sub_agents.chat_agent import chat_agent
 from core.obsidian_mate.sub_agents.obsidian_interaction_agent import obsidian_interaction_agent
 from core.obsidian_mate.sub_agents.excalidraw_interaction_agent import excalidraw_interaction_agent
 from core.obsidian_mate.sub_agents.smart_notes_agent import smart_notes_pipeline
+from core.obsidian_mate.sub_agents.transcript_agent import yt_transcript_agent
 
 from utils.logging_utils import setup_logger
 app_settings = get_settings()
@@ -40,6 +41,7 @@ obsidian_mate_agent = Agent(
         agent_tool.AgentTool(chat_agent),
         agent_tool.AgentTool(smart_notes_pipeline),
         agent_tool.AgentTool(obsidian_interaction_agent),
+        agent_tool.AgentTool(yt_transcript_agent),
         # agent_tool.AgentTool(excalidraw_interaction_agent),
     ],
 

@@ -5,13 +5,17 @@ services:
     restart: unless-stopped
     stdin_open: true
     tty: false
-
     environment:
       OBSIDIAN_HOST: "host.docker.internal"
       OBSIDIAN_API_KEY: "${OBSIDIAN_API_KEY}"
-
     env_file:
       - ./.env
-
     volumes:
       - ./vault:/vault
+
+  mcp-excalidraw-canvas:
+    image: ghcr.io/yctimlin/mcp_excalidraw-canvas:latest
+    container_name: mcp-excalidraw-canvas
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

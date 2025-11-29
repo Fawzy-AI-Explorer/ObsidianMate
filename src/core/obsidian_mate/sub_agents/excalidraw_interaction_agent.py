@@ -8,10 +8,14 @@ from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
 from utils.config_utils import get_settings
 from core.tools.excalidraw_interaction_tool import excalidraw_tool
-
+from utils.logging_utils import setup_logger
 
 app_settings = get_settings()
 template_parser = TemplateParser()
+logger = setup_logger(
+    log_file = __file__,
+    log_dir = app_settings.PATH_LOGS,
+)
 
 retry_config = types.HttpRetryOptions(
     attempts=app_settings.RETRY_ATTEMPS,
@@ -27,6 +31,13 @@ excalidraw_interaction_agent = Agent(
     description="A simple agent that can manage obsigian interactions.",
     instruction=template_parser.get("interact_excalidraw", "INSTRUCTIONS"),  # type: ignore
     tools=[excalidraw_tool],
+
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.EXCALIDRAW_INTERACTION_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.EXCALIDRAW_INTERACTION_AGENT),
+    before_model_callback=logger.info("Model is about to generate a response..."),
+    after_model_callback=logger.info("Model has generated a response."),
+    before_tool_callback=logger.info("Tool is about to be invoked..."),
+    after_tool_callback=logger.info("Tool has been invoked."),
 )
 
 

@@ -8,10 +8,14 @@ from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
 from utils.config_utils import get_settings
 from core.tools.obsidian_interaction_tool import obsidian_tool
-
+from utils.logging_utils import setup_logger
 
 app_settings = get_settings()
 template_parser = TemplateParser()
+logger = setup_logger(
+    log_file = __file__,
+    log_dir = app_settings.PATH_LOGS,
+)
 
 retry_config = types.HttpRetryOptions(
     attempts=app_settings.RETRY_ATTEMPS,
@@ -29,6 +33,13 @@ obsidian_interaction_agent = Agent(
     tools=[
         obsidian_tool
     ],
+
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.OBSIDIAN_INTERACTION_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.OBSIDIAN_INTERACTION_AGENT),
+    before_model_callback=logger.info("Model is about to generate a response..."),
+    after_model_callback=logger.info("Model has generated a response."),
+    before_tool_callback=logger.info("Obsidiab Tool is about to be invoked..."),
+    after_tool_callback=logger.info("Obsidian Tool has been invoked."),
 )
 
 

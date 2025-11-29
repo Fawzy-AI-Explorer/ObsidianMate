@@ -5,9 +5,14 @@ from google.genai import types
 from utils.config_utils import get_settings
 from models.enums import AgentNameEnum
 from stores.llm.templates import TemplateParser
+from utils.logging_utils import setup_logger
 
 app_settings = get_settings()
 template_parser = TemplateParser()
+logger = setup_logger(
+    log_file = __file__,
+    log_dir = app_settings.PATH_LOGS,
+)
 
 retry_config = types.HttpRetryOptions(
     attempts=app_settings.RETRY_ATTEMPS,
@@ -21,7 +26,12 @@ markdown_agent = Agent(
     model=Gemini(model=app_settings.MARKDOWN_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",
     instruction=template_parser.get("markdown", "INSTRUCTIONS"),  # type: ignore
-    output_key="markdown"
+    output_key="markdown",
+
+    before_agent_callback=logger.info("%s is starting...", AgentNameEnum.MARKDOWN_FORMATTER_AGENT),
+    after_agent_callback=logger.info("%s is Finishing...", AgentNameEnum.MARKDOWN_FORMATTER_AGENT),
+    before_model_callback=logger.info("Model is about to generate a response..."),
+    after_model_callback=logger.info("Model has generated a response."),
 )
 
 def main():

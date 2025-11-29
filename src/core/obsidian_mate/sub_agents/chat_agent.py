@@ -36,7 +36,7 @@ chat_agent = Agent(
     before_model_callback=logger.info("Model is about to generate a response..."),
     after_model_callback=logger.info("Model has generated a response."),
     before_tool_callback=logger.info("Callinge Google Search tool..."),
-    before_tool_callback=loggger.info("Google Search Tool call done."),
+    after_tool_callback=logger.info("Google Search Tool call done."),
 )
 
 

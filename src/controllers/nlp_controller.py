@@ -78,6 +78,29 @@ class NLPController(BaseController):
         self.logger.info("Done answering the query")
         return answer
 
+    async def get_conversation(self, session: Session) -> str:
+        """
+        Retrieve the conversation history from a session.
+
+        Args:
+            session (Session): The session object containing user and session IDs.
+
+        Returns:
+            str: The conversation history as a string. Returns an empty string if no valid history is found.
+        """
+
+        chat_history = [
+            {"author": event.author, "text": event.content.parts[0].text}
+            for event in session.events
+            if (
+                event.content
+                and event.content.parts
+                and event.content.parts[0].text not in ["", None, "null"]
+            )
+        ]
+
+        return str(chat_history) if chat_history else ""
+
 
 def main():
     """

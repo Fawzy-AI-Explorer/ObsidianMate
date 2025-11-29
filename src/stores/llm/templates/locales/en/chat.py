@@ -10,7 +10,7 @@ INSTRUCTIONS = Template(
     "\n".join(
         [
             "You are a helpful assistant. Answer user queries. ",
-            # "Use Google Search for current info or if unsure."
+            "Use Google Search for current info or if unsure."
         ]
     )
 )

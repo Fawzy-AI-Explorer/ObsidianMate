@@ -3,6 +3,7 @@ NLP Controller Module.
 """
 
 import os
+from typing import Any
 from google.adk.runners import Runner
 from google.adk.sessions import Session
 from google.genai import types
@@ -78,7 +79,7 @@ class NLPController(BaseController):
         self.logger.info("Done answering the query")
         return answer
 
-    async def get_conversation(self, session: Session) -> str:
+    async def get_conversation(self, session: Session) -> list[dict[str, Any]]:
         """
         Retrieve the conversation history from a session.
 
@@ -86,7 +87,7 @@ class NLPController(BaseController):
             session (Session): The session object containing user and session IDs.
 
         Returns:
-            str: The conversation history as a string. Returns an empty string if no valid history is found.
+            list[dict[str, Any]]: The conversation history as a list of dictionaries. Returns an empty list if no valid history is found.
         """
 
         chat_history = [
@@ -99,7 +100,7 @@ class NLPController(BaseController):
             )
         ]
 
-        return str(chat_history) if chat_history else ""
+        return chat_history
 
 
 def main():

@@ -54,7 +54,8 @@ async def answer_question(
     nlp_controller = NLPController(app_state.runner)
 
     if query.lower() == "summary":
-        chat_history = nlp_controller.get_conversation(session)
+        chat_history = await nlp_controller.get_conversation(session)
+        chat_history = str(chat_history) if chat_history else ""
         if chat_history == "":
             return JSONResponse(
                 content={
@@ -114,7 +115,7 @@ async def get_chat_history(request: Request, session_id: str, user_id: str):
             },
             status_code=status.HTTP_400_BAD_REQUEST,
         )
-    chat_history = nlp_controller.get_conversation(session)
+    chat_history = await nlp_controller.get_conversation(session)
 
     return JSONResponse(
         content={

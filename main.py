@@ -5,6 +5,7 @@ Main script for the application.
 import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from google.adk.sessions.database_session_service import DatabaseSessionService
 from google.adk.memory import InMemoryMemoryService
 from google.adk.runners import Runner
@@ -49,6 +50,19 @@ async def lifespan(app: FastAPI):  # pylint: disable=[W0621]
 
 
 app = FastAPI(lifespan=lifespan)
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(base.base_router)
 app.include_router(data.data_router)
 app.include_router(nlp.nlp_router)

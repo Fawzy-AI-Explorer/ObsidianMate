@@ -36,6 +36,8 @@ class AgentNameEnum(StrEnum):
     OBSIDIAN_MATE_AGENT = "ObsidianMateAgent"
     SMART_NOTE_PIPELINE_AGENT = "SmartNotePipelineAgent"
     EXTRACT_CONVERSATION_AGENT = "ExtractConversationAgent"
+    OBSIDIAN_INTERACTION_AGENT = "ObsidianInteractionAgent"
+    EXCALIDRAW_INTERACTION_AGENT = "ExcalidrawInteractionAgent"
 
 
 def main():

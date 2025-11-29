@@ -3,6 +3,7 @@
 import os
 from google.genai import types
 from google.adk.models.google_llm import Gemini
+from google.adk.models.lite_llm import LiteLlm
 from google.adk.agents import Agent
 from google.adk.tools import agent_tool
 from google.adk.tools.mcp_tool import McpToolset
@@ -39,7 +40,8 @@ retry_config = types.HttpRetryOptions(
 
 obsidian_mate_agent = Agent(
     name=AgentNameEnum.OBSIDIAN_MATE_AGENT,
-    model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
+    # model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
+    model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
     description="Helpfull obsidian support agent",
     instruction="Help user by interacting with obsidian",
     tools=[
@@ -65,7 +67,30 @@ obsidian_mate_agent = Agent(
                     },
                 )
             )
-        )
+        ),
+        McpToolset(
+            connection_params=StdioConnectionParams(
+                server_params=StdioServerParameters(
+                    command="docker",
+                    args=[
+                        "run",
+                        "-i",
+                        "--rm",
+                        "--network",
+                        "host",
+                        "-e",
+                        "EXPRESS_SERVER_URL",
+                        "-e",
+                        "ENABLE_CANVAS_SYNC",
+                        "ghcr.io/yctimlin/mcp_excalidraw-canvas:latest",
+                    ],
+                    env={
+                        "EXPRESS_SERVER_URL": "http://localhost:3000",
+                        "ENABLE_CANVAS_SYNC": "true",
+                    },
+                )
+            )
+        ),
     ],
 )
 

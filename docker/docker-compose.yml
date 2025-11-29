@@ -17,5 +17,5 @@ services:
     image: ghcr.io/yctimlin/mcp_excalidraw-canvas:latest
     container_name: mcp-excalidraw-canvas
     ports:
-      - "3000:3000"
+      - "3333:3000"
     restart: unless-stopped

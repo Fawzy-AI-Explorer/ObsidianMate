@@ -34,7 +34,7 @@ obsidian_mate_agent = Agent(
     tools=[
         agent_tool.AgentTool(chat_agent),
         agent_tool.AgentTool(smart_notes_pipeline),
-        agent_tool.AgentTool(obsidian_interaction_agent),
+        # agent_tool.AgentTool(obsidian_interaction_agent),
         agent_tool.AgentTool(excalidraw_interaction_agent),
     ],
 )

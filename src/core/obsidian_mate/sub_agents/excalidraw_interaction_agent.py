@@ -26,9 +26,7 @@ excalidraw_interaction_agent = Agent(
     model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
     description="A simple agent that can manage obsigian interactions.",
     instruction=template_parser.get("interact_excalidraw", "INSTRUCTIONS"),  # type: ignore
-    tools=[
-        excalidraw_tool
-    ],
+    tools=[excalidraw_tool],
 )
 
 

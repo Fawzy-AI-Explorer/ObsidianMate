@@ -196,13 +196,16 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 👥 Contributors
+
+Thanks to all the amazing people who have contributed to this project!
+
+<a href="https://github.com/Fawzy-AI-Explorer/Quiz-Generator/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Fawzy-AI-Explorer/Quiz-Generator" />
+</a>
+
+---
+
 ## 👏 Acknowledgments
-
-**Authors:**
-
-- Adham Allam
-- Mohammad Fawzy
-- Taha Ahmad
-- Abdelrahman Salama
 
 Special thanks to the open-source community and the teams behind **FastAPI**, **Google ADK**, and **Obsidian**.

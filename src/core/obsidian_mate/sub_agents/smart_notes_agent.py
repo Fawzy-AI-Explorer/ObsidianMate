@@ -1,6 +1,7 @@
 import os
 from google.adk.agents import Agent
 from google.adk.models.google_llm import Gemini
+from google.adk.models.lite_llm import LiteLlm
 from google.genai import types
 
 from core.obsidian_mate.sub_agents.summary_agent import conversation_summary_agent
@@ -20,7 +21,8 @@ retry_config = types.HttpRetryOptions(
 
 smart_notes_pipeline = Agent(
     name=AgentNameEnum.SMART_NOTE_PIPELINE_AGENT,
-    model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
+    # model=Gemini(model=app_settings.FILTER_MODEL_NAME, retry_options=retry_config),
+    model=LiteLlm(app_settings.DEFAULT_MODEL_NAME),
     description="An agent that filters irrelevant content from a conversation, and summarize the conversation in markdown format.",
     instruction=template_parser.get("take_notes", "INSTRUCTIONS"),  # type: ignore
     output_key="final_notes",

@@ -19,7 +19,7 @@ retry_config = types.HttpRetryOptions(
 
 chat_agent = Agent(
     name=AgentNameEnum.CHAT_AGENT,
-    model=Gemini(model=app_settings.CHATT_MODEL_NAME, retry_options=retry_config),
+    model=Gemini(model=app_settings.CHAT_MODEL_NAME, retry_options=retry_config),
     description="A simple agent that can answer general questions.",
     instruction=template_parser.get("chat", "INSTRUCTIONS"),  # type: ignore
 )

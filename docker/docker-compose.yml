@@ -19,3 +19,10 @@ services:
     ports:
       - "3333:3000"
     restart: unless-stopped
+
+  youtube_transcript:
+    image: mcp/youtube-transcript
+    container_name: youtube_transcript
+    stdin_open: true      # same as -i
+    tty: true
+    restart: "no"

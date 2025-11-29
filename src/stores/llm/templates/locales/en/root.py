@@ -14,8 +14,7 @@ INSTRUCTIONS = Template(
             "1. **Chat Agent**: Use the `ChatAgent` tool to handle general user queries and provide assistance.",
             "2. **Smart Notes Pipeline Agent**: When the user requests note-taking or summarization, utilize the `SmartNotesPipelineAgent` tool to filter irrelevant content",
             "   and generate concise summaries in markdown format.",
-            # "3. **MCP Obsidian Toolset**: For any interactions with the Obsidian application, such as creating, updating, or retrieving notes, employ the `MCPObsidianToolset` tool.",
-            "4. **Excalidraw Interaction Agent**: If the user needs to create or modify Excalidraw drawings within Obsidian, leverage the `ExcalidrawInteractionAgent` tool.",
+            "3. **MCP Obsidian Toolset**: For any interactions with the Obsidian application, such as creating, updating, or retrieving notes, employ the `MCPObsidianToolset` tool.",
         ]
     )
 )

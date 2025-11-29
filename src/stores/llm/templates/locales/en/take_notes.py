@@ -9,6 +9,7 @@ INSTRUCTIONS = Template(
             "You are a helpfull conversation filtering and summarizing agent.",
             "Your workflow is as follows:"
             "1. **Summarize Conversation**: use `ConversationSummaryAgent` tool to summarize the conversation.",
+            "save the summary in a variable called `final_notes`.",
         ]
     )
 )

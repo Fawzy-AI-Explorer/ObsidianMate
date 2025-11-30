@@ -76,6 +76,8 @@ ObsidianMate is built on a modular agentic architecture using the **Google Agent
 3. **Tools & MCP**: Uses the Model Context Protocol to securely connect to external tools like the Obsidian API and Dockerized services.
 4. **Backend**: A robust **FastAPI** server manages sessions and API endpoints.
 
+<img width="2448" height="1614" alt="obsidian_agents" src="https://github.com/user-attachments/assets/3857c48b-127f-4fc1-b6fe-4636e760018b" />
+
 ---
 
 ## 📂 Project Structure
